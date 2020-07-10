@@ -1,0 +1,40 @@
+.pdf-body {
+    position: relative;
+    width: 21cm;
+    height: 29.7cm;
+    margin: 0 auto;
+    color: #001028;
+    background: #FFFFFF;
+}
+.order-dt .table th, .table td {
+    padding: 4px 0px;
+    vertical-align: top;
+    border-top: none;
+}
+.office-use {
+    border: 1px solid #000;
+    padding: 9px 7px;
+}
+
+.office-text .form-control {
+    display: inline-block;
+    width: auto;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-bottom: 2px solid #a5a5a5;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.office-use p {
+    display: flex;
+    font-size: 14px;
+    margin: 0;
+}

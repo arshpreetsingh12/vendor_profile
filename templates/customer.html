@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+ <!-- Form section start  -->
+             <section class="form-section all-page-mg">
+                <div class="container">
+                	
+                	<ul class="nav  justify-content-center" id="myTab" role="tablist">
+					  <li class="nav-item mr-2">
+					    <a class="nav-link new-exist-tab active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">New Customer</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link new-exist-tab" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Existing Customer</a>
+					  </li>
+					  
+					</ul>
+					<div class="tab-content mt-4" id="myTabContent">
+						<!-- tab 1 -->
+					  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					  
+					  	<div class="Customer-Information-form">
+	                        <form method="post" action="{% url 'customers' %}" siq_id="autopick_9165">
+	                        	{% csrf_token %}
+	                        	  	{% if messages %}
+	                        	
+								{% for message in messages %}
+								<div class="alert text-center {% if message.tags == 'error' %}alert-danger{% else %} alert-{{ message.tags }}{% endif %}" role="alert">{{ message|safe }}</div>
+								{% endfor %}
+								{% endif %}
+	                            <h5 class=" mb-3">Customer Information</h5>
+	                            <div class="row">
+	                               <div class="col-md-6">
+	                                  <div class="form-group">
+	                                      <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name *" class="form-control f_name" name="first_name" required>
+	                                    </div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group">
+	                                      <input type="text" id="" aria-describedby="emailHelp" placeholder="Last Name" class="form-control l_name"  name="last_name" required>
+	                                    </div>
+	                               </div>
+	                               <div class="col-md-12">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Company *" class="form-control company" name="company" required></div>
+	                               </div>
+	                               <div class="col-md-12">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Billing Address *" class="form-control billing-address" name="billing_address" required></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="City/town *" class="form-control city" name="city" required></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                <div class="form-group">
+	                                    <select name="state" placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3 state">
+	                                       <option value="" disabled="disabled" selected="selected" hidden="hidden">State *</option>
+	                                       <option value="AL">Alabama</option>
+											<option value="AK">Alaska</option>
+											<option value="AZ">Arizona</option>
+											<option value="AR">Arkansas</option>
+											<option value="CA">California</option>
+											<option value="CO">Colorado</option>
+											<option value="CT">Connecticut</option>
+											<option value="DE">Delaware</option>
+											<option value="DC">District Of Columbia</option>
+											<option value="FL">Florida</option>
+											<option value="GA">Georgia</option>
+											<option value="HI">Hawaii</option>
+											<option value="ID">Idaho</option>
+											<option value="IL">Illinois</option>
+											<option value="IN">Indiana</option>
+											<option value="IA">Iowa</option>
+											<option value="KS">Kansas</option>
+											<option value="KY">Kentucky</option>
+											<option value="LA">Louisiana</option>
+											<option value="ME">Maine</option>
+											<option value="MD">Maryland</option>
+											<option value="MA">Massachusetts</option>
+											<option value="MI">Michigan</option>
+											<option value="MN">Minnesota</option>
+											<option value="MS">Mississippi</option>
+											<option value="MO">Missouri</option>
+											<option value="MT">Montana</option>
+											<option value="NE">Nebraska</option>
+											<option value="NV">Nevada</option>
+											<option value="NH">New Hampshire</option>
+											<option value="NJ">New Jersey</option>
+											<option value="NM">New Mexico</option>
+											<option value="NY">New York</option>
+											<option value="NC">North Carolina</option>
+											<option value="ND">North Dakota</option>
+											<option value="OH">Ohio</option>
+											<option value="OK">Oklahoma</option>
+											<option value="OR">Oregon</option>
+											<option value="PA">Pennsylvania</option>
+											<option value="RI">Rhode Island</option>
+											<option value="SC">South Carolina</option>
+											<option value="SD">South Dakota</option>
+											<option value="TN">Tennessee</option>
+											<option value="TX">Texas</option>
+											<option value="UT">Utah</option>
+											<option value="VT">Vermont</option>
+											<option value="VA">Virginia</option>
+											<option value="WA">Washington</option>
+											<option value="WV">West Virginia</option>
+											<option value="WI">Wisconsin</option>
+											<option value="WY">Wyoming</option>
+	                                    </select>
+	                                 </div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Post-code *" class="form-control post_code" required name="post_code"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Home Phone" class="form-control" name="home_phone"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone *" class="form-control business_phone" name="business_phone" required></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="fax_number"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="cell_phone"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="email" id="" aria-describedby="emailHelp" placeholder="E-mail Address *" class="form-control email" name="email" required></div>
+	                               </div>
+	                            </div>
+	                            
+	                      
+	                        <div class="text-center"><button class="btn-success btn add-customer" type="submit">Submit</button></div>
+                    	</div>
+                    	  </form>
+                    	<!-- <div class="text-right my-4">
+                    		<button class="add-new"><i class="fa fa-plus" aria-hidden="true"></i>
+Add New</button>
+                    	</div> -->
+                    	
+					  </div>
+					  <!-- tab 2 -->
+ 					  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+ 					  	<div class="container">
+					  	<form class="row">
+                		  <div class="col-md-1"></div>
+						  <div class="col-md-3 col-sm-6 form-group">
+						    <label for="exampleInputEmail1">Last Name *</label>
+						    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" name="search_last_name" required>
+						    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+						  </div>
+						  <div class="col-md-3 col-sm-6 form-group">
+						    <label for="exampleInputPassword1">Cell Phone Number</label>
+						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_cell_phone">
+						  </div>
+						  <div class="col-md-3 col-sm-6 form-group">
+						    <label for="exampleInputPassword1">Email Address *</label>
+						    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="" required name="search_email">
+						  </div>
+					 
+						  <button type="button" class="btn btn-primary find-btn find-customer">Search</button>
+						  <button type="button" class="btn btn-danger clear-field find-btn ml-2">Clear feild</button>
+						</form>
+						<div class="Customer-Information-form">
+							<div class="alert-danger alert" style="text-align: center; display: none;"></div>
+							<form method="post" action="{% url 'edit_customer' %}" siq_id="autopick_9165">
+								{% csrf_token %}
+	                            <h5 class=" mb-3">Customer Information</h5>
+	                            <div class="row">
+	                               <div class="col-md-6">
+	                                  <div class="form-group">
+	                                      <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name" class="form-control" name="edit_fisrt_name">
+	                                      <input type="hidden" name="user_id" value="">
+	                                    </div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group">
+	                                      <input type="text" id="" aria-describedby="emailHelp" placeholder="Last Name" class="form-control"  name="edit_last_name">
+	                                    </div>
+	                               </div>
+	                               <div class="col-md-12">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Company" class="form-control"  name="edit_company"></div>
+	                               </div>
+	                               <div class="col-md-12">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Billing Address" class="form-control" name="edit_billing_address"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="City/town" class="form-control" name="edit_city"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                <div class="form-group">
+	                                    <select placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3" name="edit_state">
+	                                       <option value="" disabled="disabled" selected="selected" hidden="hidden">State</option>
+	                                      	<option value="AL">Alabama</option>
+											<option value="AK">Alaska</option>
+											<option value="AZ">Arizona</option>
+											<option value="AR">Arkansas</option>
+											<option value="CA">California</option>
+											<option value="CO">Colorado</option>
+											<option value="CT">Connecticut</option>
+											<option value="DE">Delaware</option>
+											<option value="DC">District Of Columbia</option>
+											<option value="FL">Florida</option>
+											<option value="GA">Georgia</option>
+											<option value="HI">Hawaii</option>
+											<option value="ID">Idaho</option>
+											<option value="IL">Illinois</option>
+											<option value="IN">Indiana</option>
+											<option value="IA">Iowa</option>
+											<option value="KS">Kansas</option>
+											<option value="KY">Kentucky</option>
+											<option value="LA">Louisiana</option>
+											<option value="ME">Maine</option>
+											<option value="MD">Maryland</option>
+											<option value="MA">Massachusetts</option>
+											<option value="MI">Michigan</option>
+											<option value="MN">Minnesota</option>
+											<option value="MS">Mississippi</option>
+											<option value="MO">Missouri</option>
+											<option value="MT">Montana</option>
+											<option value="NE">Nebraska</option>
+											<option value="NV">Nevada</option>
+											<option value="NH">New Hampshire</option>
+											<option value="NJ">New Jersey</option>
+											<option value="NM">New Mexico</option>
+											<option value="NY">New York</option>
+											<option value="NC">North Carolina</option>
+											<option value="ND">North Dakota</option>
+											<option value="OH">Ohio</option>
+											<option value="OK">Oklahoma</option>
+											<option value="OR">Oregon</option>
+											<option value="PA">Pennsylvania</option>
+											<option value="RI">Rhode Island</option>
+											<option value="SC">South Carolina</option>
+											<option value="SD">South Dakota</option>
+											<option value="TN">Tennessee</option>
+											<option value="TX">Texas</option>
+											<option value="UT">Utah</option>
+											<option value="VT">Vermont</option>
+											<option value="VA">Virginia</option>
+											<option value="WA">Washington</option>
+											<option value="WV">West Virginia</option>
+											<option value="WI">Wisconsin</option>
+											<option value="WY">Wyoming</option>
+	                                    </select>
+	                                 </div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_postal_code" placeholder="Post-code" class="form-control"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_home_phone" placeholder="Home Phone" class="form-control"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone" class="form-control" name="edit_business_phone"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="edit_fax_number"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="edit_cell_phone"></div>
+	                               </div>
+	                               <div class="col-md-6">
+	                                  <div class="form-group"><input type="email" id="" aria-describedby="emailHelp" placeholder="E-mail Address" class="form-control" name="edit_email"></div>
+	                               </div>
+	                            </div>
+	                            
+	                       
+	                        <div class="text-center"><button type="submit" class="btn-success btn">Edit Information</button></div>
+	                    </div>
+	                     </form>
+
+					<!-- <div class="bg-white table-responsive mt-4">
+	                    <table class="table">
+	                      <thead>
+	                        <tr>
+	                          <th scope="col">#</th>
+	                          <th scope="col">First</th>
+	                          <th scope="col">Last</th>
+	                          <th scope="col">Handle</th>
+	                          <th scope="col"></th>
+	                          <th scope="col">Action</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody>
+	                        <tr>
+	                          <th scope="row">1</th>
+	                          <td>Mark</td>
+	                          <td>Otto</td>
+	                          <td>@mdo</td>
+	                          <td><a href="#">View</a></td>
+	                          <td><button type="button" class="btn btn-success">Edit</button>
+	                           <button type="button" class="btn btn-danger">Delete</button></td>
+	                        </tr>
+	                        <tr>
+	                          <th scope="row">1</th>
+	                          <td>Mark</td>
+	                          <td>Otto</td>
+	                          <td>@mdo</td>
+	                          <td><a href="#">View</a></td>
+	                          <td><button type="button" class="btn btn-success">Edit</button>
+	                           <button type="button" class="btn btn-danger">Delete</button></td>
+	                        </tr>
+	                        <tr>
+	                          <th scope="row">1</th>
+	                          <td>Mark</td>
+	                          <td>Otto</td>
+	                          <td>@mdo</td>
+	                          <td><a href="#">View</a></td>
+	                          <td><button type="button" class="btn btn-success">Edit</button>
+	                           <button type="button" class="btn btn-danger">Delete</button></td>
+	                        </tr>
+	                        <tr>
+	                          <th scope="row">1</th>
+	                          <td>Mark</td>
+	                          <td>Otto</td>
+	                          <td>@mdo</td>
+	                          <td><a href="#">View</a></td>
+	                          <td><button type="button" class="btn btn-success">Edit</button>
+	                           <button type="button" class="btn btn-danger">Delete</button></td>
+	                        </tr>
+	                        <tr>
+	                          <th scope="row">1</th>
+	                          <td>Mark</td>
+	                          <td>Otto</td>
+	                          <td>@mdo</td>
+	                          <td><a href="#">View</a></td>
+	                          <td><button type="button" class="btn btn-success">Edit</button>
+	                           <button type="button" class="btn btn-danger">Delete</button></td>
+	                        </tr>
+	                      </tbody>
+	                    </table>
+	                </div> -->
+	             </div>
+					  </div>
+					</div>
+
+                
+                </div>
+             </section>
+
+
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript">
+
+$('.add-customer').click(function(){
+	var fisrt_name = $(".f_name").val();
+	var company = $(".company").val();
+	var billing_address = $(".billing-address").val();
+	var state = $(".state").val();
+	var city = $(".city").val();
+	var post_code = $(".post_code").val();
+	var email = $(".email").val();
+	var business_phone = $(".business_phone").val();
+	var submit = true;
+
+    if (fisrt_name==''|| fisrt_name == null){
+        $('.f_name').css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$('.f_name').css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (company==''|| company == null){
+        $('.company').css('border', '1px solid red');
+         submit = false;
+    }
+    else{
+    	$('.company').css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (billing_address == ''|| billing_address == null){
+        $('.billing-address').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.billing-address').css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }  
+      if (business_phone == ''|| business_phone == null){
+        $('.business_phone').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.business_phone').css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     } 
+    if (state == ''|| state == null){
+        $('.state').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.state').css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }
+     if (city==''|| city == null){
+        $('.city').css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$('.city').css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (post_code==''|| post_code == null){
+        $('.post_code').css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$('.post_code').css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (email==''|| email == null || email == undefined){
+        $('.email').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.email').css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+     
+    return submit 
+})
+
+
+	$('.find-customer').click(function(){
+		$('.alert-danger').html('');
+		$('input[name="user_id"]').val('');
+		$('.alert-danger').css('display','none');
+		var last_name = $("input[name='search_last_name']").val();
+		var cell_phone = $("input[name='search_cell_phone']").val();
+		var email = $("input[name='search_email']").val();
+
+		if (last_name==''|| last_name == null){
+        $("input[name='search_last_name']").css('border', '1px solid red');
+          submit = false;
+	    }
+	     else{
+	    	$("input[name='search_last_name']").css('border', '1px solid #ced4da');
+	    	submit = true;
+	    }
+	    if (email==''|| email == null){
+	        $("input[name='search_email']").css('border', '1px solid red');
+	         submit = false;
+	    }
+	    else{
+	    	$("input[name='search_email']").css('border', '1px solid #ced4da');
+	    	submit = true;
+	    }
+	    if (submit == true){
+			$.ajax({
+
+				url: '{% url "search_address" %}',
+				type: 'post',
+	            data:{  
+	            	'csrfmiddlewaretoken': '{{csrf_token}}',
+	               'last_name':last_name,
+	               'cell_phone':cell_phone,
+	               'email': email
+
+	            },
+				success: function(response){
+					if (response.status == true){
+						var email = response.email;
+						
+						$('input[name="user_id"]').val(response.user_id);
+						$('input[name="edit_email"]').val(email);
+						$('input[name="edit_fisrt_name"]').val(response.first_name);
+						$('input[name="edit_last_name"]').val(response.last_name);
+						$('input[name="edit_company"]').val(response.company);
+						$('input[name="edit_billing_address"]').val(response.biling_address);
+						$('input[name="edit_city"]').val(response.city);
+						$('input[name="edit_postal_code"]').val(response.postal_code);
+						$('input[name="edit_home_phone"]').val(response.home_phone);
+						$('input[name="edit_business_phone"]').val(response.business_phone);
+						$('input[name="edit_fax_number"]').val(response.fax_number);
+						$('input[name="edit_cell_phone"]').val(response.cell_phone);
+						
+					}
+					else{
+						$('input[name="user_id"]').val('');
+						$('.alert-danger').css('display','block');
+						$('.alert-danger').append(response.msg);
+					}
+
+
+				}
+			});
+	}
+	})
+
+	$('.clear-field').click(function(){
+		$('input[type="text"]').val('');
+		$('input[type="email"]').val('');
+	})
+</script>
+
+{% endblock %}
+
