@@ -6,6 +6,9 @@
 	.add-job-form{
 		display: none;
 	}
+	.edit_job_form{
+		display: none;
+	}
 
 </style>
 {% endblock %}
@@ -129,7 +132,7 @@
 	                            </div>
 	                            
 	                      
-	                        <div class="text-center"><button type="button" class="btn-success btn add-job">Submit</button></div>
+	                        <div class="text-center"><button type="button" class="btn-success btn add-job">Save</button></div>
 	                    </div>
 	                      </form>
 
@@ -167,8 +170,9 @@
 						  <button type="button" class="btn btn-primary find-job find-btn">Search</button>
 						  <button type="button" class="btn btn-danger clear-field find-btn ml-2">Clear feild</button>
 						</form>
-						<div class="Customer-Information-form">
-							<div class="alert-danger alert" style="text-align: center; display: none;"></div>
+						<div class="alert-danger alert" style="text-align: center; display: none;"></div>
+						<div class="Customer-Information-form edit_job_form">
+							
 							<form method="post" action="{% url 'edit_job' %}"  siq_id="autopick_9165">
 								{% csrf_token %}
 	                            <h5 class=" mb-3">Job Location</h5>
@@ -381,6 +385,7 @@ $('.add-job').click(function(){
 
 
 	$('.find-job').click(function(){
+		$('.edit_job_form').css('display','none');
 		$('.alert-danger').html('');
 		$('input[name="job_id"]').val('');
 		$('.alert-danger').css('display','none');
@@ -403,7 +408,7 @@ $('.add-job').click(function(){
             },
 			success: function(response){
 				if (response.status == true){
-					
+					$('.edit_job_form').css('display','block');
 					$('input[name="job_id"]').val(response.job_id);
 					$('input[name="edit_fisrt_name"]').val(response.first_name);
 					$('input[name="edit_last_name"]').val(response.last_name);
@@ -413,6 +418,7 @@ $('.add-job').click(function(){
 			
 				}
 				else{
+					$('.edit_job_form').css('display','none');
 					$('input[name="job_id"]').val('');
 					$('.alert-danger').css('display','block');
 					$('.alert-danger').append(response.msg);
@@ -424,6 +430,7 @@ $('.add-job').click(function(){
 	})
 
 	$('.clear-field').click(function(){
+		$('.edit_job_form').css('display','none');
 		$('input[type="text"]').val('');
 		$('input[type="email"]').val('');
 		$('textarea[name="edit_address"]').val('');
