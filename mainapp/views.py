@@ -327,7 +327,7 @@ class OrderView(View):
 
 		try:
 			add_order = Order.objects.create(
-				customer_id = 1,
+				customer_id = customer_id,
 				)
 			if labor_dis:
 				add_order.labor = labor_dis
