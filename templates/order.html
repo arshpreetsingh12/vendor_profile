@@ -16,16 +16,17 @@
 		  </li>
 		</ul>
 	
-
+<div class="alert-success alert" style="text-align: center; display: none;"></div>
 <div class="tab-content" id="myTabContent">
 	<!-- #1 -->
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  <div>
   	<!-- Form section Product Entry  -->
-    <section class="form-section ">
+    <section class="form-section  add-order">
         <div class="">
         	<div class="Customer-Information-form-2">
 				<form method="post" siq_id="autopick_9165">
 					<div class="d-flex justify-content-between">
+						<div class="alert-danger alert" style="text-align: center; display: none;"></div>
 	                    <h5 class=" mb-3">Create Order</h5>
 	                    <div>
 	                    	<input type="button" value="Add Product" onclick="copyRow();" />
@@ -43,35 +44,35 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					    <tr>
+					    <tr class="product_tr">
 					      	<td>
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="product_service" placeholder="" class="form-control product_service">
                                 </div>
                           	</td>
 					      	<td>
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="color" placeholder="" class="form-control color">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="qty" placeholder="" class="form-control qty">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="area" placeholder="" class="form-control area">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control product_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="product_price">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="text-center">
-						      		<i class="fa fa-trash" aria-hidden="true"></i>
+						      		<i class="fa fa-trash remove-product" aria-hidden="true"></i>
 						      	</div>
                           	</td>
 					    </tr>
@@ -90,12 +91,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="labor_dis" placeholder="" class="form-control labor_dis">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control labor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="labor_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -104,12 +105,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control floor_des" name="floor_des">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="floor_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -118,12 +119,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control sub_floor_des" name="sub_floor_des">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control sub_floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="sub_floor_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -132,12 +133,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control appliances" name="appliances">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control appliances_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="appliances_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -146,12 +147,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control trim" name="trim">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control extra_fee trim_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="trim_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -160,12 +161,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control miscellaneous_des" name="miscellaneous_des">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control miscellaneous_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="miscellaneous_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -174,12 +175,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control price_include" name="price_include">
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control price_include_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="price_include_price">
                                 </div>
                           		</td>
 						    </tr>
@@ -187,44 +188,46 @@
 						</tbody>
 					</table>
 					<div class="text-center mb-4">
-					  	<button class="btn btn-success">Calculate Subtotal</button>
+					  	<button type="button" class="btn btn-success calculate-sub-total">Calculate Subtotal</button>
 					  </div>
-					<div class="d-flex">
+					<div class="d-flex"> 
 					<div class="col-md-6"></div>
 					<div class="col-md-6">
 						<table class="table">
 						  <tbody>
 						    <tr>
 						      <th scope="row">Sub-Total</th>
-						      <td>$0.00</td>
+						      <td class="sub-totals">$0.00</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Sales Tax</th>
 						      <td><div class="form-group">
-                                  <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="In percentage (%)" class="sale-tax form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6">
                                 </div></td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Total</th>
-						      <td>$0.00</td>
+						      <td class="total-amount">$0.00</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">50% Deposit</th>
-						      <td>$0.00</td>
+						      <td class="deposite-amount">$0.00</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Balance Due</th>
-						      <td>$0.00</td>
+						      <td class="due-balance">$0.00</td>
 						    </tr>
 						  </tbody>
 						</table>
 					</div>
 					</div>					
 					<div class="text-center mb-4 d-flex mr-2 justify-content-center">
-					  	<button class="btn btn-success mr-2">Calculate Total</button>
+					  	<button type="button" class="btn btn-success mr-2 grand-total" disabled="true">Calculate Total</button>
 					  	<ul class="nav btm-nav" id="myTab" role="tablist">
 					  	<li class="nav-item">
-						    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Next</a>
+						    <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" >Next</a> -->
+						    <!-- <button class="nav-link save-order btn-success" type="button">Next</button> -->
+						    <button class="btn btn-success nav-link  save-order" type="button" disabled="true">Next</button>
 						</li>
 						</ul>
 					 </div>
@@ -241,7 +244,7 @@
 
   </div>
   	<!-- #2 -->
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <div class="notes-tab" id="profile" style="display: none;">
   	<section class="">
   		<div class="Customer-Information-form-2">
   			<form>
@@ -252,22 +255,24 @@
 				<!-- </div> -->
 			  <div class="form-group">
 			    <label for="exampleFormControlTextarea1">Customer Notes</label>
-			    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+			    <textarea class="form-control" name="customer_notes" required id="exampleFormControlTextarea1" rows="4"></textarea>
 			  </div>
 
 			  <div class="form-group">
 			    <label for="exampleFormControlTextarea1">Job Site Notes</label>
-			    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+			    <textarea class="form-control" required name="job_site_notes" id="exampleFormControlTextarea1" rows="5"></textarea>
 			  </div>
 			</form>
 			<div class="d-flex justify-content-center">
 	  		<ul class="nav btm-nav" id="myTab" role="tablist">
 			<li class="nav-item mr-2">
-			    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Previous</a>
+			    <a class="nav-link active notes-per">Previous</a>
 			  </li>
 			 
 			  <li class="nav-item">
-			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Next</a>
+			  	<!-- <a class="nav-link add-cus-notes" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Next</a> -->
+			    <a class="nav-link add-cus-notes">Next</a>
+			    <!-- <button class="add-cus-notes btn btn-success">Next</button> -->
 			  </li>
 			</ul>
 		</div>
@@ -276,16 +281,20 @@
   	</section>
   </div>
   	<!-- #3 -->
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+  <div class="add-terms-conditions" id="contact" style="display: none;">
   	<div class="Customer-Information-form-2">
 	  	<div class="form-group">
 		    <label for="exampleFormControlTextarea1">Terms & Conditions</label>
-		    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+		    <textarea class="form-control" name="terms" id="exampleFormControlTextarea1" rows="5"></textarea>
 		</div>
 		<div class="d-flex justify-content-center mt-3">
   		<ul class="nav btm-nav" id="myTab" role="tablist">
 		<li class="nav-item">
-		    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Previous</a>
+		    <a class="nav-link terms_per">Previous</a>
+		</li>
+		<li class="nav-item">
+		    <!--  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Save</a> -->
+		     <a class="nav-link add-terms">Save</a>
 		</li>
 		 
 		 
@@ -302,3 +311,232 @@
  
 
   {% endblock %}
+
+
+  {% block extrascript %}
+
+<script type="text/javascript">
+	 function copyRow() {
+	    var html = $('#tbl tr:last').html();
+	    $('#tbl tr:last').after("<tr class='product_tr'>" + html + "</tr>");
+	}
+
+	$(document).on('click','.remove-product',function(){
+		var len = $(this).closest('tbody').find('tr').length;
+	if(len == 1){
+		return;
+	}
+	$(this).closest('tr').remove();
+	})
+
+function CalculateSubtotal(){
+	var product_price = 0;
+		var sub_total = 0;
+		var inputs = $(".product_price");
+		for(var i = 0; i < inputs.length; i++){
+		    var get_price = $(inputs[i]).val();
+		  
+		     if (get_price == null || get_price == ""){
+		     		$(inputs[i]).css('border','1px solid red');
+				}
+				else{
+					$(inputs[i]).css('border','1px solid #ced4da');
+					product_price = product_price + parseFloat(get_price);
+
+				}
+		}
+		var extra_charge = $(".extra_fee");
+		for(var i = 0; i < extra_charge.length; i++){
+			    var extra_price = $(extra_charge[i]).val();
+			    if (extra_price == null || extra_price == ""){
+			    	console.log("in if extra")
+			   	 	sub_total = sub_total;
+				}
+				else{
+					sub_total = sub_total + parseFloat(extra_price);
+				}
+		}
+		sub_total = product_price + sub_total;
+		$('.sub-totals').html('$ ' + sub_total.toString());
+}
+
+	$('.calculate-sub-total').click(function(){
+		$('.grand-total').attr('disabled',false);
+		CalculateSubtotal()
+		
+	});
+
+	function CalculateGrandTotal(){
+		var sub_total_amount = $('.sub-totals').html();
+		var sub_total = parseFloat(sub_total_amount.replace('$ ', ''));
+		var sale_tax = $('.sale-tax').val();
+		if (sale_tax == "" || sale_tax == null){
+			console.log('in if ')
+			var total_amount = sub_total.toString()
+			$('.total-amount').html('$ ' + total_amount);
+			deposite_amount = (parseFloat(total_amount)/2).toString();
+			$('.deposite-amount').html('$ ' + deposite_amount);
+			$('.due-balance').html('$ ' + deposite_amount);
+		}
+		else{
+			var calculate_percentage_amount = ((sub_total * parseFloat(sale_tax))/100);
+			var total_amount = (sub_total + calculate_percentage_amount).toString();
+			$('.total-amount').html('$ ' + total_amount);
+			deposite_amount = (parseFloat(total_amount)/2).toString();
+			$('.deposite-amount').html('$ ' + deposite_amount);
+			$('.due-balance').html('$ ' + deposite_amount);
+		}
+	}
+
+	$('.grand-total').click(function(){
+		CalculateGrandTotal()
+		$('.save-order').attr('disabled',false)
+	})
+
+	$('.save-order').click(function(){
+		var submit = true;
+		var product_data = [];
+		$('.product_tr').each(function(){
+			var value = {}
+			var all_inputs = $(this).find('input');
+			$(all_inputs).each(function(){
+				var check_values = $(this).val();
+				if (check_values == null || check_values == ""){
+					$(this).css('border','1px solid red');
+			    	submit = false;
+				}
+				else{
+					$(this).css('border','1px solid #ced4da');
+					value[this.name] = $(this).val();
+				}
+			});
+			product_data.push(value);
+		});
+		CalculateSubtotal()
+		CalculateGrandTotal()
+		var labor_dis = $('input[name="labor_dis"]').val();
+		var labor_price = $('input[name="labor_price"]').val();
+		var floor_des = $('input[name="floor_des"]').val();
+		var floor_price = $('input[name="floor_price"]').val();
+		var sub_floor_des = $('input[name="sub_floor_des"]').val();
+		var sub_floor_price = $('input[name="sub_floor_price"]').val();
+		var appliances = $('input[name="appliances"]').val();
+		var appliances_price = $('input[name="appliances_price"]').val();
+		var trim = $('input[name="trim"]').val();
+		var trim_price = $('input[name="trim_price"]').val();
+		var miscellaneous_des = $('input[name="miscellaneous_des"]').val();
+		var miscellaneous_price = $('input[name="miscellaneous_price"]').val();
+		var price_include = $('input[name="price_include"]').val();
+		var price_include_price = $('input[name="price_include_price"]').val();
+		var sub_tot = ($('.sub-totals').html()).replace('$ ','');
+		var total_amount = ($('.total-amount').html()).replace('$ ','');
+		var deposite_amount = ($('.deposite-amount').html()).replace('$ ','');
+		var due_balance = ($('.due-balance').html()).replace('$ ','');
+		var sale_tax = $('.sale-tax').val();
+	
+		if (submit == true){
+			$.ajax({
+				url: '{% url "order" %}',
+				type: 'POST',
+				data:{
+					'labor_dis':labor_dis,
+					'labor_price':labor_price,
+					'floor_des':floor_des,
+					'floor_price':floor_price,
+					'sub_floor_des':sub_floor_des,
+					'sub_floor_price':sub_floor_price,
+					'appliances':appliances,
+					'appliances_price':appliances_price,
+					'trim':trim,
+					'miscellaneous_des':miscellaneous_des,
+					'miscellaneous_price':miscellaneous_price,
+					'price_include':price_include,
+					'price_include_price':price_include_price,
+					'product_data':(JSON.stringify(product_data)),
+					'csrfmiddlewaretoken':'{{ csrf_token }}',
+					'sub_tot':sub_tot,
+					'total_amount':total_amount,
+					'deposite_amount':deposite_amount,
+					'due_balance':due_balance,
+					'sale_tax':sale_tax
+
+				},
+				success: function(response){
+					if (response.status == true){
+						localStorage.setItem('order_id',response.order_id);
+						$('.add-order').css('display','none');
+						$('.notes-tab').css('display','block');
+					}
+
+				}
+			});
+		}
+	})
+
+$('.add-cus-notes').click(function(){
+	var customer_notes = $('textarea[name="customer_notes"]').val();
+	var job_site_notes = $('textarea[name="job_site_notes"]').val();
+	var order_id = localStorage.getItem('order_id');
+
+	$.ajax({
+			url: '{% url "add_customer_notes" %}',
+			type: 'POST',
+			data:{
+				'csrfmiddlewaretoken':'{{ csrf_token }}',
+				'customer_notes':customer_notes,
+				'job_site_notes':job_site_notes,
+				'order_id':order_id
+			},
+			success: function(response){
+				console.log(response.status,'===================response.status')
+				if (response.status == true){
+					$('.add-terms-conditions').css('display', 'block');
+					$('.notes-tab').css('display','none');
+					
+					
+				}
+
+			}
+		});
+		
+})
+
+$('.add-terms').click(function(){
+	var terms = $('textarea[name="terms"]').val();
+	var order_id = localStorage.getItem('order_id');
+	$.ajax({
+			url: '{% url "add_terms" %}',
+			type: 'POST',
+			data:{
+				'csrfmiddlewaretoken':'{{ csrf_token }}',
+				'terms':terms,
+				'order_id':order_id
+			},
+			success: function(response){
+				if (response.status == true){
+					// $('.notes-tab').css('display','none');
+					// $('.add-terms-conditions').css('display', 'block');
+					$('.alert-success').append(response.msg);
+					$('.alert-success').show();
+					var terms = $('textarea[name="terms"]').val('');
+
+				}
+
+			}
+		});
+		
+})
+
+
+$('.terms_per').click(function(){
+	$('.add-terms-conditions').css('display', 'none');
+	$('.notes-tab').css('display','block');
+})
+
+$('.notes-per').click(function(){
+	$('.add-order').css('display', 'block');
+	$('.notes-tab').css('display','none');
+})
+
+ </script>
+{% endblock %}

@@ -137,9 +137,6 @@
 	                      </form>
 
 
-
-
-
                     	<!-- <div class="text-right my-4">
                     		<button class="add-new"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button>
                     	</div> -->
@@ -368,6 +365,7 @@ $('.add-job').click(function(){
 	            },
 				success: function(response){
 					if (response.status == true){
+						localStorage.setItem('customer_id',response.customer_id);
 						window.location = "{% url 'order' %}"	
 					}
 					else{

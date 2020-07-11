@@ -182,11 +182,6 @@ class Jobs(View):
 	template_name = "jobs.html"
 
 	def get(self,request):
-	
-		# try:
-		# 	customer = Customerinformation.objects.get(pk = str(customer_id))
-		# except Exception as e:
-		# 	messages.error(request,"Customer does not exist.")
 		customer_id = request.session.get('customer_id')
 		return render(request,self.template_name,locals())
 
@@ -200,7 +195,7 @@ class Jobs(View):
 		city = request.POST.get('city')
 		state = request.POST.get('state')
 		post_code = request.POST.get('post_code')
-		print(request.POST,'=============================')
+
 		try:
 			if customer_id != 'None':
 				customer = Customerinformation.objects.filter(pk = str(customer_id)).last()
@@ -214,7 +209,6 @@ class Jobs(View):
 					response['msg'] = "Please add new customer first."
 					# messages.error(request,"Please add new customer first.")
 			else:
-				print(">>>>>>>>>>>>>>>>>>>>>>>>")
 				response['status'] = False
 				response['msg'] = "Please add new customer first."
 				# messages.error(request,"Please add new customer first.")	
@@ -231,6 +225,7 @@ class Jobs(View):
 					city = city,
 					postal_code = post_code
 				)
+			response['customer_id'] = customer.id
 			response['status'] = True
 			# response['msg'] = "Please add new customer first."
 			# messages.success(request,"Job location successfilly added.")
@@ -273,15 +268,6 @@ class SearchJobs(View):
 
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
-
-
-class OrderView(View):
-	template_name = "order.html"
-
-	def get(self,request):
-		return render(request,self.template_name,locals())
-
-
 class EditJobLocation(View):
 	def post(self, request):
 		job_id = request.POST.get('job_id')
@@ -307,4 +293,149 @@ class EditJobLocation(View):
 		except Exception as e:
 			print(e)
 			messages.error(request,"Something went wrong.Please try again.")
-			return HttpResponseRedirect('/jobs/'+ str(job_id))
+			return HttpResponseRedirect('/jobs')
+
+
+class OrderView(View):
+	template_name = "order.html"
+
+	def get(self,request):
+		return render(request,self.template_name,locals())
+
+	def post(Self, request):
+		response = {}
+		products = json.loads(request.POST.get('product_data'))
+		labor_dis = request.POST.get('labor_dis')
+		labor_price = request.POST.get('labor_price')
+		floor_des = request.POST.get('floor_des')
+		floor_price = request.POST.get('floor_price')
+		sub_floor_des = request.POST.get('sub_floor_des')
+		sub_floor_price = request.POST.get('sub_floor_price')
+		appliances = request.POST.get('appliances')
+		appliances_price = request.POST.get('appliances_price')
+		trim = request.POST.get('trim')
+		miscellaneous_des = request.POST.get('miscellaneous_des')
+		miscellaneous_price = request.POST.get('miscellaneous_price')
+		price_include = request.POST.get('price_include')
+		price_include_price = request.POST.get('price_include_price')
+		sub_tot = request.POST.get('sub_tot')
+		total_amount = request.POST.get('total_amount')
+		deposite_amount = request.POST.get('deposite_amount')
+		due_balance = request.POST.get('due_balance')
+		sale_tax = request.POST.get('sale_tax')
+		customer_id = request.session.get('customer_id')
+
+		try:
+			add_order = Order.objects.create(
+				customer_id = 1,
+				)
+			if labor_dis:
+				add_order.labor = labor_dis
+			if labor_price:
+				add_order.labor_price = labor_price
+			if floor_des:
+				add_order.floor_prep = floor_des
+			if floor_price:	
+				add_order.floor_prep_price = floor_price
+			if sub_floor_des:
+				add_order.sub_floor = sub_floor_des
+			if sub_floor_price:
+				add_order.sub_floor_price = sub_floor_price
+			if appliances:
+				add_order.appliances = appliances
+			if appliances_price:
+				add_order.appliances_price = appliances_price
+			if miscellaneous_des:
+				add_order.miscellaneous = miscellaneous_des
+			if miscellaneous_price:
+				add_order.miscellaneous_price = miscellaneous_price
+			if price_include:
+				add_order.price_includes = price_include
+			if price_include_price:
+				add_order.price_includes_price = price_include_price
+			if sub_tot:
+				add_order.sub_total = sub_tot
+			if sale_tax:
+				add_order.sales_tax = sale_tax
+			if total_amount:
+				add_order.total = total_amount
+			if deposite_amount:
+				add_order.deposit = deposite_amount
+			if due_balance:
+				add_order.balance_due = due_balance
+			add_order.save()
+			for data in products:
+				add_product = Products.objects.create(
+					order = add_order,
+					product_name = data['product_service'],
+					color = data['color'],
+					qty = data['qty'],
+					area = data['area'],
+					price = data['product_price']
+					
+				)
+			response['order_id'] = add_order.id
+			response['status'] = True
+		except Exception as e:
+			raise e
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
+
+
+class AddCustomerNotes(View):
+	def post(Self, request):
+		response = {}
+		customer_notes = request.POST.get('customer_notes')
+		job_site_notes = request.POST.get('job_site_notes')
+		order_id = request.POST.get('order_id')
+
+		try:
+			Notes.objects.create(
+				customer_notes = customer_notes,
+				 job_site_notes = job_site_notes,
+				 order_id = order_id
+			)
+			response['status'] = True
+		except Exception as e:
+			raise e
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
+
+
+class AddCustomerNotes(View):
+	def post(Self, request):
+		response = {}
+		customer_notes = request.POST.get('customer_notes')
+		job_site_notes = request.POST.get('job_site_notes')
+		order_id = request.POST.get('order_id')
+
+		try:
+			Notes.objects.create(
+				customer_notes = customer_notes,
+				 job_site_notes = job_site_notes,
+				 order_id = order_id
+			)
+			response['status'] = True
+		except Exception as e:
+			raise e
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
+
+
+class AddTerms(View):
+	def post(Self, request):
+		response = {}
+		terms = request.POST.get('terms')
+		order_id = request.POST.get('order_id')
+
+		try:
+			Terms.objects.create(
+				 order_id = order_id,
+				 terms = terms
+			)
+			response['msg'] = "Order successfully submit"
+			response['status'] = True
+		except Exception as e:
+			raise e
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')

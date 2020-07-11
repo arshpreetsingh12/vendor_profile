@@ -11,7 +11,9 @@ urlpatterns = [
 	path('edit-customer', EditCustomer.as_view(), name = "edit_customer"),
 	path('jobs', Jobs.as_view(), name = "jobs"),
 	path('search-jobs>', SearchJobs.as_view(), name = "search_jobs"),
-	path('edit-job>', EditJobLocation.as_view(), name = "edit_job"),
+	path('edit-job', EditJobLocation.as_view(), name = "edit_job"),
+	path('add-customer-notes', AddCustomerNotes.as_view(), name = "add_customer_notes"),
+	path('add-terms', AddTerms.as_view(), name = "add_terms"),
 
 
 ]
