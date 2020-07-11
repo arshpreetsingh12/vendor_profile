@@ -91,8 +91,9 @@ class CustomerView(View):
 					fax_number = fax_number,
 					cell_phone = cell_phone
 				)
+			request.session['customer_id'] = add_customer.id
 			messages.success(request,"Customer successfilly added.")
-			return HttpResponseRedirect('/jobs/'+ str(add_customer.id))
+			return HttpResponseRedirect(reverse('jobs'))
 		except Exception as e:
 			messages.error(request,"Something went wrong.")
 			return HttpResponseRedirect(reverse('customers'))
@@ -180,16 +181,18 @@ class EditCustomer(View):
 class Jobs(View):
 	template_name = "jobs.html"
 
-	def get(self,request,customer_id):
+	def get(self,request):
 	
-		try:
-			customer = Customerinformation.objects.get(pk = str(customer_id))
-		except Customerinformation.DoesNotExist:
-			messages.error(request,"Customer does not exist.")
+		# try:
+		# 	customer = Customerinformation.objects.get(pk = str(customer_id))
+		# except Exception as e:
+		# 	messages.error(request,"Customer does not exist.")
+		customer_id = request.session.get('customer_id')
 		return render(request,self.template_name,locals())
 
-	def post(self, request,customer_id):
-
+	def post(self, request):
+		response = {}
+		customer_id = request.POST.get('customer_id')
 		first_name = request.POST.get('first_name')
 		last_name = request.POST.get('last_name')
 		phone_number = request.POST.get('phone_number')
@@ -197,15 +200,25 @@ class Jobs(View):
 		city = request.POST.get('city')
 		state = request.POST.get('state')
 		post_code = request.POST.get('post_code')
-		
+		print(request.POST,'=============================')
 		try:
-			customer = Customerinformation.objects.filter(pk = str(customer_id)).last()
-			if customer:
-				job_obj = JobLocation.objects.get(customer = customer)
-				messages.info(request,"Job location already exist for this customer.")
+			if customer_id != 'None':
+				customer = Customerinformation.objects.filter(pk = str(customer_id)).last()
+				if customer:
+					job_obj = JobLocation.objects.get(customer = customer)
+					# messages.info(request,"Job location already exist for this customer.")
+					response['status'] = False
+					response['msg'] = "Job location already exist for this customer."
+				else:
+					response['status'] = False
+					response['msg'] = "Please add new customer first."
+					# messages.error(request,"Please add new customer first.")
 			else:
-				messages.error(request,"Invalid customer.")	
-			return HttpResponseRedirect('/jobs/'+ str(customer_id))
+				print(">>>>>>>>>>>>>>>>>>>>>>>>")
+				response['status'] = False
+				response['msg'] = "Please add new customer first."
+				# messages.error(request,"Please add new customer first.")	
+			# return HttpResponseRedirect(reverse('jobs'))
 		except JobLocation.DoesNotExist:
 			customer = Customerinformation.objects.filter(pk = str(customer_id)).last()
 			add_job = JobLocation.objects.create(
@@ -218,8 +231,10 @@ class Jobs(View):
 					city = city,
 					postal_code = post_code
 				)
-			messages.success(request,"Job location successfilly added.")
-			return HttpResponseRedirect(reverse('order'))
+			response['status'] = True
+			# response['msg'] = "Please add new customer first."
+			# messages.success(request,"Job location successfilly added.")
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
 class SearchJobs(View):
 	def post(self, request):

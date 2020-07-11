@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 
+ {% block css %}
+<style type="text/css">
+	.add-job-form{
+		display: none;
+	}
+
+</style>
+{% endblock %}
+
 {% block content %}
 
  <!-- Form section start  -->
@@ -9,31 +18,33 @@
                 	
                 	<ul class="nav  justify-content-center" id="myTab" role="tablist">
 					  <li class="nav-item mr-2">
-					    <a class="nav-link new-exist-tab active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">New Job Site</a>
+					    <a class="nav-link new-exist-tab new-job active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">New Job Site</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link new-exist-tab" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Existing Job Site</a>
+					    <a class="nav-link new-exist-tab existing-job" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Existing Job Site</a>
 					  </li>
 					  
 					</ul>
 					<div class="tab-content mt-4" id="myTabContent">
 						<!-- tab 1 -->
 					  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-					  <div class="Customer-Information-form">
+					  <div class="Customer-Information-form add-job-form">
 					  	  	{% if messages %}
 	                        	
 								{% for message in messages %}
 								<div class="alert text-center {% if message.tags == 'error' %}alert-danger{% else %} alert-{{ message.tags }}{% endif %}" role="alert">{{ message|safe }}</div>
 								{% endfor %}
 								{% endif %}
-							<form method="post" action="{% url 'jobs' customer.id %}" siq_id="autopick_9165">
-								{% csrf_token %}
+								<div class="alert-danger alert" style="text-align: center; display: none;"></div>
+							<for siq_id="autopick_9165">
+						
 	                            <h5 class=" mb-3">Job Location</h5>
 	                            <div class="row">
 	                               <div class="col-md-6">
 	                                  <div class="form-group">
 	                                      <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name *" class="form-control" name="first_name">
 	                                    </div>
+	                                    <input type="hidden" name="customer_id" value="{{customer_id}}">
 	                               </div>
 	                               <div class="col-md-6">
 	                                  <div class="form-group">
@@ -118,7 +129,7 @@
 	                            </div>
 	                            
 	                      
-	                        <div class="text-center"><button type="submit" class="btn-success btn">Submit</button></div>
+	                        <div class="text-center"><button type="button" class="btn-success btn add-job">Submit</button></div>
 	                    </div>
 	                      </form>
 
@@ -248,7 +259,10 @@
 	                            </div>
 	                            
 	                        
-	                        <div class="text-center"><button type="submit" class="btn-success btn">Edit Information</button></div>
+	                        <div class="text-center">
+	                        <a href="{% url 'jobs' %}"><button type="button" class="btn-success btn" style="margin-right: 15px;">Back</button></a>
+
+	                        <button type="submit" class="btn-success btn">Edit Information</button></div>
 	                    </div>
 	                    </form>
 	             </div>
@@ -263,6 +277,109 @@
 
 {% block extrascript %}
 <script type="text/javascript">
+
+$('.new-job').click(function(){
+	$('.add-job-form').css('display','block');
+	$(this).hide();
+	$('.existing-job').hide();
+})
+
+$('.existing-job').click(function(){
+	$('.add-job-form').css('display','none');
+	$(this).hide();
+	$('.new-job').hide();
+})
+
+
+
+$('.add-job').click(function(){
+	$('.alert-danger').html('');
+	var fisrt_name = $("input[name='first_name']").val();
+	var phone_number = $("input[name='phone_number']").val();
+	var state = $(".edit_state").val();
+	var city = $("input[name='city']").val();
+	var post_code = $("input[name='post_code']").val();
+	var submit = true;
+
+    if (fisrt_name==''|| fisrt_name == null){
+        $("input[name='first_name']").css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$("input[name='first_name']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (phone_number==''|| phone_number == null){
+        $("input[name='phone_number']").css('border', '1px solid red');
+         submit = false;
+    }
+    else{
+    	$("input[name='phone_number']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (city == ''|| city == null){
+        $("input[name='city']").css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$("input[name='city']").css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }  
+      
+    if (state == ''|| state == null){
+        $('.edit_state').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.edit_state').css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }
+    if (post_code==''|| post_code == null){
+        $("input[name='post_code']").css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$("input[name='post_code']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+     
+    if (submit == true){ 
+	    $.ajax({
+
+				url: '{% url "jobs" %}',
+				type: 'post',
+	            data:{  
+	               'csrfmiddlewaretoken': '{{csrf_token}}',
+	               'fisrt_name':fisrt_name,
+	               'phone_number':phone_number,
+	               'state': state,
+	               'city':city,
+	               'post_code':post_code,
+	               'last_name':$("input[name='last_name']").val(),
+	                'address':$("textarea[name='address']").val(),
+	                'customer_id':$("input[name='customer_id']").val(),
+
+	            },
+				success: function(response){
+					if (response.status == true){
+						window.location = "{% url 'order' %}"	
+					}
+					else{
+						$('.alert-danger').css('display','block');
+						$('.alert-danger').append(response.msg);
+					}
+
+
+				}
+			});
+	}
+
+})
+
+
+
 	$('.find-job').click(function(){
 		$('.alert-danger').html('');
 		$('input[name="job_id"]').val('');
