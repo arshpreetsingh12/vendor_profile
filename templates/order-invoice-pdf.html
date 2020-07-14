@@ -44,11 +44,11 @@
 					  <tbody>
 					    <tr>
 					      <th scope="row">Order No.</th>
-					      <td>1</td>
+					      <td>{{add_order.order_id}}</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">Date</th>
-					      <td>12/03/2020</td>
+					      <td>{{add_order.created_at|date:"Y-m-d"}}</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">Referred By:</th>
@@ -65,27 +65,27 @@
 					  <tbody>
 					    <tr>
 					      <th scope="row">Customer:</th>
-					      <td colspan="2"></td>
+					      <td colspan="2">{{add_order.customer.user.first_name}}</td>
 					      <th scope="row">Address:</th>
-					      <td colspan="2"></td>
+					      <td colspan="2">{{add_order.customer.biling_address}}</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">City:</th>
-					      <td></td>
+					      <td>{{add_order.customer.city}}</td>
 					      <th scope="row">Country:</th>
-					      <td></td>
+					      <td>{{add_order.customer.country}}</td>
 					      <th scope="row">State:</th>
-					      <td></td>
+					      <td>{{add_order.customer.state}}</td>
 					      <th scope="row">Zip:</th>
-					      <td></td>
+					      <td>{{add_order.customer.postal_code}}</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">Phone:</th>
-					      <td colspan="2"></td>
+					      <td colspan="2">{{add_order.customer.business_phone}}</td>
 					      <th scope="row">P/C:</th>
-					      <td></td>
+					      <td>{{add_order.customer.cell_phone}}</td>
 					      <th scope="row">Fax:</th>
-					      <td></td>
+					      <td>{{add_order.customer.fax_number}}</td>
 					    </tr>
 					  </tbody>
 					</table>
@@ -117,12 +117,21 @@
 					    </tr>
 					  </thead>
 					  <tbody>
+					  	{% for pro in add_order.products_set.all %}
 					    <tr>
+					      <td><p>{{pro.product_name}}</p></td>
+					      <td><p>{{pro.color}}</p></td>
+					      <td><p>{{pro.qty}}</p></td>
+					      <td><p>{{pro.area}}</p></td>
+					      <td><p>$ {{pro.price}}</p></td>
+					    </tr>
+					    {% endfor %}
+					    <!-- <tr>
 					      <td><p></p></td>
-					      <td><p></p></td>
-					      <td><p></p></td>
-					      <td><p></p></td>
-					      <td><p></p></td>
+					      <td></td>
+					      <td></td>
+					      <td></td>
+					      <td></td>
 					    </tr>
 					    <tr>
 					      <td><p></p></td>
@@ -151,59 +160,52 @@
 					      <td></td>
 					      <td></td>
 					      <td></td>
-					    </tr>
-					    <tr>
-					      <td><p></p></td>
-					      <td></td>
-					      <td></td>
-					      <td></td>
-					      <td></td>
-					    </tr>
+					    </tr> -->
 					    <tr>
 					      <th colspan="4">Labor</th>
-					      <td></td>
+					      <td>$ {{add_order.labor_price}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4">Floor Prep</th>
-					      <td></td>
+					      <td>$ {{add_order.floor_prep_price}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4">Sub-Floor</th>
-					      <td></td>
+					      <td>$ {{add_order.sub_floor_price}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4">Appliances</th>
-					      <td></td>
+					      <td>$ {{add_order.appliances_price}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4">Trim</th>
-					      <td></td>
+					      <td>$ {{add_order.trim_price}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4">Miscellaneous</th>
-					      <td></td>
+					      <td>$ {{add_order.miscellaneous_price}}</td>
 					    </tr>
 					   
 					    <tr>
 					      <th colspan="3">Price Includes</th>
 					      <th class="text-right">Sub-Total</th>
-					      <td></td>
+					      <td>$ {{add_order.sub_total}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4" class="text-right">Sales Tax</th>
-					      <td></td>
+					      <td>{{add_order.sales_tax}} %</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4" class="text-right">Total</th>
-					      <td></td>
+					      <td>$ {{add_order.total}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4" class="text-right">50% Deposit</th>
-					      <td></td>
+					      <td>$ {{add_order.deposit}}</td>
 					    </tr>
 					    <tr>
 					      <th colspan="4" class="text-right">Balance Due</th>
-					      <td></td>
+					      <td>$ {{add_order.balance_due}}</td>
 					    </tr>
 
 					  </tbody>

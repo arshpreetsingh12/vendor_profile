@@ -52,6 +52,8 @@ class Order(models.Model):
 	miscellaneous_price = models.FloatField(default = 0.0)
 	price_includes = models.CharField(max_length=200, null = True, blank = True)
 	price_includes_price = models.FloatField(default = 0.0)
+	trim = models.CharField(max_length=200, null = True, blank = True)
+	trim_price = models.FloatField(default = 0.0)
 	sub_total = models.FloatField(default = 0.0)
 	sales_tax = models.CharField(max_length=200,null = True, blank = True)
 	total = models.FloatField(default = 0.0)
@@ -59,6 +61,8 @@ class Order(models.Model):
 	balance_due = models.FloatField(default = 0.0)
 	is_deleted = models.BooleanField(default = False)
 	invoice_file = models.FileField(upload_to='invoices/',blank=True)
+	created_at  = models.DateTimeField(auto_now_add=True, null =True,blank=True)
+	updated_at = models.DateTimeField(auto_now=True, null =True,blank=True)
 
 	# def __str__(self):
 	# 	return self.customer

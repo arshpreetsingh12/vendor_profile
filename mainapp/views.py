@@ -12,7 +12,9 @@ import json
 import time
 from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+from django.db import transaction
 """ 
 	This view for user login  
 								"""
@@ -342,6 +344,7 @@ class OrderView(LoginRequiredMixin,View):
 		appliances = request.POST.get('appliances')
 		appliances_price = request.POST.get('appliances_price')
 		trim = request.POST.get('trim')
+		trim_price = request.POST.get('trim_price')
 		miscellaneous_des = request.POST.get('miscellaneous_des')
 		miscellaneous_price = request.POST.get('miscellaneous_price')
 		price_include = request.POST.get('price_include')
@@ -360,85 +363,91 @@ class OrderView(LoginRequiredMixin,View):
 		change_time_obj = int(time_obj)
 
 		try:
-			add_order = Order.objects.create(
-				# customer_id = customer_id,
-				customer_id = 1,
-				)
-			if labor_dis:
-				add_order.labor = labor_dis
-			if labor_price:
-				add_order.labor_price = labor_price
-			if floor_des:
-				add_order.floor_prep = floor_des
-			if floor_price:	
-				add_order.floor_prep_price = floor_price
-			if sub_floor_des:
-				add_order.sub_floor = sub_floor_des
-			if sub_floor_price:
-				add_order.sub_floor_price = sub_floor_price
-			if appliances:
-				add_order.appliances = appliances
-			if appliances_price:
-				add_order.appliances_price = appliances_price
-			if miscellaneous_des:
-				add_order.miscellaneous = miscellaneous_des
-			if miscellaneous_price:
-				add_order.miscellaneous_price = miscellaneous_price
-			if price_include:
-				add_order.price_includes = price_include
-			if price_include_price:
-				add_order.price_includes_price = price_include_price
-			if sub_tot:
-				add_order.sub_total = sub_tot
-			if sale_tax:
-				add_order.sales_tax = sale_tax
-			if total_amount:
-				add_order.total = total_amount
-			if deposite_amount:
-				add_order.deposit = deposite_amount
-			if due_balance:
-				add_order.balance_due = due_balance
-			add_order.order_id = change_time_obj + int(add_order.id)
-			add_order.is_deleted = False
-			add_order.save()
+			with transaction.atomic():
+				add_order = Order.objects.create(
+					customer_id = customer_id
+					# customer_id = 1,
+					)
+				if labor_dis:
+					add_order.labor = labor_dis
+				if labor_price:
+					add_order.labor_price = labor_price
+				if floor_des:
+					add_order.floor_prep = floor_des
+				if floor_price:	
+					add_order.floor_prep_price = floor_price
+				if sub_floor_des:
+					add_order.sub_floor = sub_floor_des
+				if sub_floor_price:
+					add_order.sub_floor_price = sub_floor_price
+				if appliances:
+					add_order.appliances = appliances
+				if appliances_price:
+					add_order.appliances_price = appliances_price
+				if miscellaneous_des:
+					add_order.miscellaneous = miscellaneous_des
+				if miscellaneous_price:
+					add_order.miscellaneous_price = miscellaneous_price
+				if price_include:
+					add_order.price_includes = price_include
+				if price_include_price:
+					add_order.price_includes_price = price_include_price
+				if sub_tot:
+					add_order.sub_total = sub_tot
+				if sale_tax:
+					add_order.sales_tax = sale_tax
+				if total_amount:
+					add_order.total = total_amount
+				if deposite_amount:
+					add_order.deposit = deposite_amount
+				if due_balance:
+					add_order.balance_due = due_balance
+				if trim:
+					add_order.trim = trim
+				if trim_price:
+					add_order.trim_price = trim_price
+				add_order.order_id = change_time_obj + int(add_order.id)
+				add_order.is_deleted = False
+				add_order.save()
 
-			for data in products:
-				add_product = Products.objects.create(
+				for data in products:
+					add_product = Products.objects.create(
+						order = add_order,
+						product_name = data['product_service'],
+						color = data['color'],
+						qty = data['qty'],
+						area = data['area'],
+						price = data['product_price']
+						
+					)
+
+				Terms.objects.create(
 					order = add_order,
-					product_name = data['product_service'],
-					color = data['color'],
-					qty = data['qty'],
-					area = data['area'],
-					price = data['product_price']
-					
+					terms = terms
 				)
 
-			Terms.objects.create(
-				order = add_order,
-				terms = terms
-			)
+				Notes.objects.create(
+					customer_notes = customer_notes,
+					 job_site_notes = job_site_notes,
+					 order = add_order
+				)
 
-			Notes.objects.create(
-				customer_notes = customer_notes,
-				 job_site_notes = job_site_notes,
-				 order = add_order
-			)
-
-			html_string2 = render_to_string('order-invoice-pdf.html',  locals())
-			html = HTML(string=html_string2, base_url=request.build_absolute_uri(),)
-			html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ add_order.order_id + '.pdf');
-			invoice_file = 'invoices/' + add_order.order_id + '.pdf'
-			seller_email = add_order.customer.user.email
-			email_from = settings.EMAIL_HOST_USER
-			subject ="Order Invoice"
-			msgs = EmailMessage(subject , html_string2 , email_from, seller_email )
-			msgs.content_subtype = "html" 
-			msgs.attach_file(settings.BASE_DIR + '/media/' + invoice_file)
-			msgs.send()
-			add_order.invoice_file = invoice_file
-			add_order.save()
-			response['msg'] = "Order successfully submit"
-			response['status'] = True
+				html_string2 = render_to_string('order-invoice-pdf.html',  locals())
+				html = HTML(string=html_string2, base_url=request.build_absolute_uri(),)
+				html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ str(add_order.order_id) + '.pdf');
+				invoice_file = 'invoices/' + str(add_order.order_id) + '.pdf'
+				seller_email = [add_order.customer.user.email]
+				email_from = settings.EMAIL_HOST_USER
+				subject ="Order Invoice"
+				message = ""
+				msgs = EmailMessage(subject ,message  , email_from, seller_email )
+				msgs.content_subtype = "html" 
+				msgs.attach_file(settings.BASE_DIR + '/media/' + invoice_file)
+				msgs.send()
+				add_order.invoice_file = invoice_file
+				add_order.save()
+				response['msg'] = "Order successfully submit"
+				response['status'] = True
 			
 		except Exception as e:
 			raise e
