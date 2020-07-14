@@ -55,7 +55,7 @@
 	                                    </div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Phone Number" class="form-control" name="phone_number"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Phone Number" class="form-control" name="phone_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-12">
 	                                  <div class="form-group">
@@ -125,7 +125,7 @@
 	                                 </div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Postal Code" class="form-control" name="post_code"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Postal Code" class="form-control" name="post_code" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8"></div>
 	                               </div>
 	                               
 	                              
@@ -153,7 +153,7 @@
 						  </div>
 						  <div class="col-md-2 col-sm-6 form-group">
 						    <label for="exampleInputPassword1">Contact Number</label>
-						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_contact_number">
+						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_contact_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12">
 						  </div>
 						  <div class="col-md-3 col-sm-6 form-group">
 						    <label for="exampleInputPassword1">City</label>
@@ -161,7 +161,7 @@
 						  </div>
 						  <div class="col-md-2 col-sm-6 form-group">
 						    <label for="exampleInputPassword1">Zip Code</label>
-						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_zip">
+						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_zip" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8">
 						  </div>
 					 
 						  <button type="button" class="btn btn-primary find-job find-btn">Search</button>
@@ -196,7 +196,7 @@
 	                               </div>
 	                               <div class="col-md-6">
 	                                  <div class="form-group">
-	                                    <select placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3" name="edit_state">
+	                                    <select placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3 edit_state" name="edit_state">
 	                                       <option value="" disabled="disabled" selected="selected" hidden="hidden">State *</option>
 	                                       <option value="AL">Alabama</option>
 											<option value="AK">Alaska</option>
@@ -253,7 +253,7 @@
 	                                 </div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Postal Code" class="form-control" name="edit_postal_code"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Postal Code" class="form-control" name="edit_postal_code" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8"></div>
 	                               </div>
 	                               
 	                              
@@ -263,7 +263,7 @@
 	                        <div class="text-center">
 	                        <a href="{% url 'jobs' %}"><button type="button" class="btn-success btn" style="margin-right: 15px;">Back</button></a>
 
-	                        <button type="submit" class="btn-success btn">Edit Information</button></div>
+	                        <button type="submit" class="btn-success btn edit-job">Edit Information</button></div>
 	                    </div>
 	                    </form>
 	             </div>
@@ -295,11 +295,11 @@ $('.existing-job').click(function(){
 
 $('.add-job').click(function(){
 	$('.alert-danger').html('');
-	var fisrt_name = $("input[name='first_name']").val();
-	var phone_number = $("input[name='phone_number']").val();
+	var fisrt_name = ($("input[name='first_name']").val()).trim();
+	var phone_number = ($("input[name='phone_number']").val()).trim();
 	var state = $(".state").val();
-	var city = $("input[name='city']").val();
-	var post_code = $("input[name='post_code']").val();
+	var city = ($("input[name='city']").val()).trim();
+	var post_code = ($("input[name='post_code']").val()).trim();
 	var submit = true;
 
     if (fisrt_name==''|| fisrt_name == null){
@@ -387,10 +387,10 @@ $('.add-job').click(function(){
 		$('.alert-danger').html('');
 		$('input[name="job_id"]').val('');
 		$('.alert-danger').css('display','none');
-		var last_name = $("input[name='search_last_name']").val();
-		var search_contact_number = $("input[name='search_contact_number']").val();
-		var search_city = $("input[name='search_city']").val();
-		var search_zip = $("input[name='search_zip']").val();
+		var last_name = ($("input[name='search_last_name']").val()).trim();
+		var search_contact_number = ($("input[name='search_contact_number']").val()).trim();
+		var search_city = ($("input[name='search_city']").val()).trim();
+		var search_zip = ($("input[name='search_zip']").val()).trim();
 
 		$.ajax({
 
@@ -426,6 +426,64 @@ $('.add-job').click(function(){
 			}
 		});
 	})
+
+
+$('.edit-job').click(function(){
+	$('.alert-danger').html('');
+	var fisrt_name = ($("input[name='edit_fisrt_name']").val()).trim();
+	var edit_last_name = ($("input[name='edit_last_name']").val()).trim();
+	var state = $(".edit_state").val();
+	var city = ($("input[name='edit_city']").val()).trim();
+	var post_code = ($("input[name='edit_postal_code']").val()).trim();
+	var submit = true;
+
+    if (fisrt_name==''|| fisrt_name == null){
+        $("input[name='edit_fisrt_name']").css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$("input[name='edit_fisrt_name']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (edit_last_name==''|| edit_last_name == null){
+        $("input[name='edit_last_name']").css('border', '1px solid red');
+         submit = false;
+    }
+    else{
+    	$("input[name='edit_last_name']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+    if (city == ''|| city == null){
+        $("input[name='edit_city']").css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$("input[name='edit_city']").css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }  
+      
+    if (state == ''|| state == null){
+        $('.edit_state').css('border', '1px solid red');
+          submit = false;
+    }
+    else{
+    	$('.edit_state').css('border', '1px solid #ced4da');
+    	submit = true;
+   
+     }
+    if (post_code==''|| post_code == null){
+        $("input[name='post_code']").css('border', '1px solid red');
+          submit = false;
+    }
+     else{
+    	$("input[name='post_code']").css('border', '1px solid #ced4da');
+    	submit = true;
+    }
+
+    return submit
+
+})
 
 	$('.clear-field').click(function(){
 		$('.edit_job_form').css('display','none');

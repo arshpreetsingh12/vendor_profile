@@ -16,7 +16,7 @@
  <!-- Form section start  -->
              <section class="form-section all-page-mg">
                 <div class="container">
-                	
+                	<div class="alert-success alert" style="text-align: center; display: none;"></div>
                 	<ul class="nav  justify-content-center" id="myTab" role="tablist">
 					  <li class="nav-item mr-2">
 					    <a class="nav-link new-exist-tab new-customer active" id="home-tab" data-toggle="tab" href="#home" role="tab" class="new-customer" aria-controls="home" aria-selected="true">New Customer</a>
@@ -40,6 +40,7 @@
 								<div class="alert text-center {% if message.tags == 'error' %}alert-danger{% else %} alert-{{ message.tags }}{% endif %}" role="alert">{{ message|safe }}</div>
 								{% endfor %}
 								{% endif %}
+								<div class="alert-danger alert" style="text-align: center; display: none;"></div>
 	                            <h5 class=" mb-3">Customer Information</h5>
 	                            <div class="row">
 	                               <div class="col-md-6">
@@ -120,19 +121,19 @@
 	                                 </div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Post-code *" class="form-control post_code" required name="post_code"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Post-code *" class="form-control post_code" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8" required name="post_code"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Home Phone" class="form-control" name="home_phone"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Home Phone" class="form-control" name="home_phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone *" class="form-control business_phone" name="business_phone" required></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone *" class="form-control business_phone" name="business_phone" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="fax_number"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="fax_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="cell_phone"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="cell_phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
 	                                  <div class="form-group"><input type="email" id="" aria-describedby="emailHelp" placeholder="E-mail Address *" class="form-control email" name="email" required></div>
@@ -161,7 +162,7 @@ Add New</button>
 						  </div>
 						  <div class="col-md-3 col-sm-6 form-group">
 						    <label for="exampleInputPassword1">Cell Phone Number</label>
-						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_cell_phone">
+						    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" name="search_cell_phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12">
 						  </div>
 						  <div class="col-md-3 col-sm-6 form-group">
 						    <label for="exampleInputPassword1">Email Address *</label>
@@ -257,19 +258,19 @@ Add New</button>
 	                                 </div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_postal_code" placeholder="Post-code" class="form-control"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_postal_code" placeholder="Post-code" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="8"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_home_phone" placeholder="Home Phone" class="form-control"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" name="edit_home_phone" placeholder="Home Phone" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone" class="form-control" name="edit_business_phone"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Business Phone" class="form-control" name="edit_business_phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="edit_fax_number"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Fax Number" class="form-control" name="edit_fax_number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
-	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="edit_cell_phone"></div>
+	                                  <div class="form-group"><input type="text" id="" aria-describedby="emailHelp" placeholder="Cell Phone" class="form-control" name="edit_cell_phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="12"></div>
 	                               </div>
 	                               <div class="col-md-6">
 	                                  <div class="form-group"><input type="email" id="" aria-describedby="emailHelp" placeholder="E-mail Address" class="form-control" name="edit_email"></div>
@@ -355,14 +356,25 @@ Add New</button>
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript">
+var msg = localStorage.getItem('success_msg');
+if (msg){
+	$('.alert-success').append(msg);
+	$('.alert-success').show();
+}
 
 $('.new-customer').click(function(){
+	localStorage.removeItem('success_msg');
+	$('.alert-success').hide();
+	$('.alert-success').html('');
 	$('.add-customer-form').css('display','block');
 	$(this).hide();
 	$('.existing-customer').hide();
 })
 
 $('.existing-customer').click(function(){
+	localStorage.removeItem('success_msg');
+	$('.alert-success').hide();
+	$('.alert-success').html('');
 	$('.add-customer-form').css('display','none');
 	$(this).hide();
 	$('.new-customer').hide();
@@ -370,15 +382,18 @@ $('.existing-customer').click(function(){
 
 
 $('.add-customer').click(function(){
-	var fisrt_name = $(".f_name").val();
-	var company = $(".company").val();
-	var billing_address = $(".billing-address").val();
+	$('.alert-danger').hide();
+	$('.alert-danger').html('');
+	var fisrt_name = ($(".f_name").val()).trim();
+	var company = ($(".company").val()).trim();
+	var billing_address = ($(".billing-address").val()).trim();
 	var state = $(".state").val();
-	var city = $(".city").val();
-	var post_code = $(".post_code").val();
-	var email = $(".email").val();
-	var business_phone = $(".business_phone").val();
+	var city = ($(".city").val()).trim();
+	var post_code = ($(".post_code").val()).trim();
+	var email = ($(".email").val()).trim();
+	var business_phone = ($(".business_phone").val()).trim();
 	var submit = true;
+	var email_pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
     if (fisrt_name==''|| fisrt_name == null){
         $('.f_name').css('border', '1px solid red');
@@ -447,6 +462,14 @@ $('.add-customer').click(function(){
     	$('.email').css('border', '1px solid #ced4da');
     	submit = true;
     }
+
+     if (email != "" || email == null){
+      
+      if(!email_pattern.test(email)){
+         $('.alert-danger').append('Please enter a valid email address');
+         $('.alert-danger').show();
+        }
+    }
      
     return submit 
 })
@@ -457,9 +480,9 @@ $('.add-customer').click(function(){
 		$('.alert-danger').html('');
 		$('input[name="user_id"]').val('');
 		$('.alert-danger').css('display','none');
-		var last_name = $("input[name='search_last_name']").val();
-		var cell_phone = $("input[name='search_cell_phone']").val();
-		var email = $("input[name='search_email']").val();
+		var last_name = ($("input[name='search_last_name']").val()).trim();
+		var cell_phone = ($("input[name='search_cell_phone']").val()).trim();
+		var email = ($("input[name='search_email']").val()).trim();
 
 		if (last_name==''|| last_name == null){
         $("input[name='search_last_name']").css('border', '1px solid red');
@@ -477,6 +500,7 @@ $('.add-customer').click(function(){
 	    	$("input[name='search_email']").css('border', '1px solid #ced4da');
 	    	submit = true;
 	    }
+
 	    if (submit == true){
 			$.ajax({
 
@@ -528,14 +552,14 @@ $('.add-customer').click(function(){
 	});
 
 $('.edit-customer').click(function(){
-	var fisrt_name = $("input[name='edit_fisrt_name']").val();
-	var company = $("input[name='edit_company']").val();
-	var billing_address = $("input[name='edit_billing_address']").val();
+	var fisrt_name = ($("input[name='edit_fisrt_name']").val()).trim();
+	var company = ($("input[name='edit_company']").val()).trim();
+	var billing_address = ($("input[name='edit_billing_address']").val()).trim();
 	var state = $(".edit_state").val();
-	var city = $("input[name='edit_city']").val();
+	var city = ($("input[name='edit_city']").val()).trim();
 	var post_code = $("input[name='edit_postal_code']").val();
-	var email = $("input[name='edit_email']").val();
-	var business_phone =  $("input[name='edit_business_phone']").val();
+	var email = ($("input[name='edit_email']").val()).trim();
+	var business_phone =  ($("input[name='edit_business_phone']").val()).trim();
 	var submit = true;
 
     if (fisrt_name==''|| fisrt_name == null){

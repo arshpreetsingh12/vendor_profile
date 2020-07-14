@@ -37,8 +37,9 @@ class JobLocation(models.Model):
 
 
 class Order(models.Model):
-	""" This table for store Job Location. """
+	""" This table for store Order. """
 	customer = models.ForeignKey(Customerinformation, on_delete=models.CASCADE)
+	order_id = models.CharField(max_length=50,null = True, blank = True)
 	labor = models.CharField(max_length=200,null = True, blank = True)
 	labor_price = models.FloatField(default = 0.0)
 	floor_prep = models.CharField(max_length=200, null = True, blank = True)
@@ -56,12 +57,14 @@ class Order(models.Model):
 	total = models.FloatField(default = 0.0)
 	deposit = models.FloatField(default = 0.0)
 	balance_due = models.FloatField(default = 0.0)
+	is_deleted = models.BooleanField(default = False)
+	invoice_file = models.FileField(upload_to='invoices/',blank=True)
 
 	# def __str__(self):
 	# 	return self.customer
 
 class Products(models.Model):
-	""" This table for store Job Location. """
+	""" This table for store Products. """
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null = True)
 	product_name = models.CharField(max_length=200)
 	color = models.CharField(max_length=200, null = True, blank = True)
@@ -74,13 +77,13 @@ class Products(models.Model):
 	# 	return self.customer
 
 class Notes(models.Model):
-	""" This table for store Job Location. """
+	""" This table for store Customer Notes. """
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null = True)
 	customer_notes = models.TextField(max_length=500, null = True, blank = True)
 	job_site_notes = models.TextField(max_length=500, null = True, blank = True)
 
 
 class Terms(models.Model):
-	""" This table for store Job Location. """
+	""" This table for store order terms. """
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, null = True)
 	terms = models.TextField(max_length=500, null = True, blank = True)

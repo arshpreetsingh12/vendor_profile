@@ -389,9 +389,22 @@ button.add-new {
     color: #fff;
     font-weight: 400;
     border-radius: 4px;
-    padding: 0 18px;
+    /*padding: 0 18px;*/
 }
 .Customer-lsit-table {
     padding: 28px;
     background: #fff;
+}
+.btm-nav li button {
+    background: #28a745;
+    color: #fff;
+    font-weight: 400;
+    border-radius: 4px;
+    padding: 0 18px;
+    line-height: 2;
+
+}
+.btn:focus, .btn.focus {
+    outline: 0;
+    box-shadow: none;
 }

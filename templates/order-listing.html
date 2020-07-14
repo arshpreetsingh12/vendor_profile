@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+ <!-- Form section start  -->
+             <section class="form-section all-page-mg">
+                <div class="container">
+                	<div class="Customer-lsit-table">
+						<table class="table">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Order ID</th>
+						      <th scope="col">First Name</th>
+						      <th scope="col">E-mail ID</th>
+						      <th scope="col">Action</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  	{% for order in orders %}
+						    <tr>
+						      <th scope="row">{{forloop.counter}}</th>
+						      <td>{{order.order_id}}</td>
+						      <td>{{order.customer.user.first_name}}</td>
+						      <td>{{order.customer.user.email}}</td>
+						      <td><span class="mr-2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+						      	<span class=""><i class="fa fa-trash delete-order" data-id = '{{order.id}}' aria-hidden="true"></i></span></td>
+						    </tr>
+						    {% endfor %}
+						    
+						  </tbody>
+						</table>	
+                        <!-- <div class="text-center"><button class="btn-success btn">Submit</button></div> -->
+                    </div>
+                </div>
+             </section>
+      {% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript">
+
+$('.delete-order').click(function(){
+	var order_id = $(this).attr('data-id');
+	   $.ajax({
+			url: '{% url "order-delete" %}',
+			type: 'POST',
+			data:{
+				'csrfmiddlewaretoken':'{{ csrf_token }}',
+				'delete_order_id':order_id,
+			},
+			success: function(response){
+				if (response.status == true){
+					window.location.reload();
+				}
+			}
+
+		})
+})
+
+</script>
+
+{% endblock %}

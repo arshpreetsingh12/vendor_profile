@@ -9,6 +9,9 @@ from django.db.models import Q
 from django.urls import reverse
 from .models import *
 import json
+import time
+from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 """ 
 	This view for user login  
@@ -37,15 +40,15 @@ class LoginView(View):
 							
 					else:
 						messages.error(request,'Invalid credentials.')
-						return HttpResponseRedirect(reverse('web_login'))
+						return HttpResponseRedirect(reverse('login'))
 			else:
 				messages.error(request,'Incorrect email and password.')
-				return HttpResponseRedirect(reverse('web_login'))
+				return HttpResponseRedirect(reverse('login'))
 
 		except Exception as e:
 			print(str(e))
 			messages.info(request,'No such account exist.')
-			return HttpResponseRedirect(reverse('web_login'))
+			return HttpResponseRedirect(reverse('login'))
 
 """ 
 	This view for user logout  
@@ -59,7 +62,8 @@ class Logout(View):
 		return HttpResponseRedirect(reverse('login'))
 
 
-class CustomerView(View):
+class CustomerView(LoginRequiredMixin,View):
+	login_url = '/'
 	template_name = "customer.html"
 
 	def get(self,request):
@@ -114,7 +118,9 @@ class CustomerView(View):
 	
 
 
-class SearchCustomer(View):
+class SearchCustomer(LoginRequiredMixin,View):
+	login_url = '/'
+
 	def post(self, request):
 		response = {}
 		last_name = request.POST.get('last_name')
@@ -151,7 +157,9 @@ class SearchCustomer(View):
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
 
-class EditCustomer(View):
+class EditCustomer(LoginRequiredMixin, View):
+	login_url = '/'
+
 	def post(self, request):
 		user_id = request.POST.get('user_id')
 		first_name = request.POST.get('edit_fisrt_name')
@@ -192,7 +200,8 @@ class EditCustomer(View):
 			messages.error(request,"Something went wrong.Please try again.")
 			return HttpResponseRedirect(reverse('customers'))
 
-class Jobs(View):
+class Jobs(LoginRequiredMixin,View):
+	login_url = '/'
 	template_name = "jobs.html"
 
 	def get(self,request):
@@ -245,7 +254,9 @@ class Jobs(View):
 			# messages.success(request,"Job location successfilly added.")
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
-class SearchJobs(View):
+class SearchJobs(LoginRequiredMixin, View):
+	login_url = '/'
+
 	def post(self, request):
 		response = {}
 		last_name = request.POST.get('last_name')
@@ -282,7 +293,9 @@ class SearchJobs(View):
 
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
-class EditJobLocation(View):
+class EditJobLocation(LoginRequiredMixin, View):
+	login_url = '/'
+
 	def post(self, request):
 		job_id = request.POST.get('job_id')
 		first_name = request.POST.get('edit_fisrt_name')
@@ -310,8 +323,9 @@ class EditJobLocation(View):
 			return HttpResponseRedirect('/jobs')
 
 
-class OrderView(View):
+class OrderView(LoginRequiredMixin,View):
 	template_name = "order.html"
+	login_url = '/'
 
 	def get(self,request):
 		return render(request,self.template_name,locals())
@@ -338,10 +352,17 @@ class OrderView(View):
 		due_balance = request.POST.get('due_balance')
 		sale_tax = request.POST.get('sale_tax')
 		customer_id = request.session.get('customer_id')
+		terms = request.POST.get('terms')
+		customer_notes = request.POST.get('customer_notes')
+		job_site_notes = request.POST.get('job_site_notes')
+
+		time_obj = time.time()
+		change_time_obj = int(time_obj)
 
 		try:
 			add_order = Order.objects.create(
-				customer_id = customer_id,
+				# customer_id = customer_id,
+				customer_id = 1,
 				)
 			if labor_dis:
 				add_order.labor = labor_dis
@@ -377,7 +398,10 @@ class OrderView(View):
 				add_order.deposit = deposite_amount
 			if due_balance:
 				add_order.balance_due = due_balance
+			add_order.order_id = change_time_obj + int(add_order.id)
+			add_order.is_deleted = False
 			add_order.save()
+
 			for data in products:
 				add_product = Products.objects.create(
 					order = add_order,
@@ -388,82 +412,100 @@ class OrderView(View):
 					price = data['product_price']
 					
 				)
-			response['order_id'] = add_order.id
-			response['status'] = True
-		except Exception as e:
-			raise e
-			response['status'] = False
-		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
-
-class AddCustomerNotes(View):
-	def post(Self, request):
-		response = {}
-		customer_notes = request.POST.get('customer_notes')
-		job_site_notes = request.POST.get('job_site_notes')
-		order_id = request.POST.get('order_id')
-
-		try:
-			Notes.objects.create(
-				customer_notes = customer_notes,
-				 job_site_notes = job_site_notes,
-				 order_id = order_id
-			)
-			response['status'] = True
-		except Exception as e:
-			raise e
-			response['status'] = False
-		return HttpResponse(json.dumps(response), content_type = 'application/json')
-
-
-class AddCustomerNotes(View):
-	def post(Self, request):
-		response = {}
-		customer_notes = request.POST.get('customer_notes')
-		job_site_notes = request.POST.get('job_site_notes')
-		order_id = request.POST.get('order_id')
-
-		try:
-			Notes.objects.create(
-				customer_notes = customer_notes,
-				 job_site_notes = job_site_notes,
-				 order_id = order_id
-			)
-			response['status'] = True
-		except Exception as e:
-			raise e
-			response['status'] = False
-		return HttpResponse(json.dumps(response), content_type = 'application/json')
-
-
-class AddTerms(View):
-	def post(Self, request):
-		response = {}
-		terms = request.POST.get('terms')
-		order_id = request.POST.get('order_id')
-
-		try:
 			Terms.objects.create(
-				 order_id = order_id,
-				 terms = terms
+				order = add_order,
+				terms = terms
 			)
+
+			Notes.objects.create(
+				customer_notes = customer_notes,
+				 job_site_notes = job_site_notes,
+				 order = add_order
+			)
+
+			html_string2 = render_to_string('order-invoice-pdf.html',  locals())
+			html = HTML(string=html_string2, base_url=request.build_absolute_uri(),)
+			html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ add_order.order_id + '.pdf');
+			invoice_file = 'invoices/' + add_order.order_id + '.pdf'
+			seller_email = add_order.customer.user.email
+			email_from = settings.EMAIL_HOST_USER
+			subject ="Order Invoice"
+			msgs = EmailMessage(subject , html_string2 , email_from, seller_email )
+			msgs.content_subtype = "html" 
+			msgs.attach_file(settings.BASE_DIR + '/media/' + invoice_file)
+			msgs.send()
+			add_order.invoice_file = invoice_file
+			add_order.save()
 			response['msg'] = "Order successfully submit"
 			response['status'] = True
+			
 		except Exception as e:
 			raise e
 			response['status'] = False
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
 
-class OrderSearch(View):
-
+class OrderSearch(LoginRequiredMixin, View):
 	template_name = "modify-order.html"
+	login_url = '/'
 
 	def get(self,request):
 		return render(request,self.template_name)
 
-	# def post(self, request, *args, **kwargs):
-	# 	print('\n'*5)
-	# 	print('inside logout post')
-	# 	logout(request)
-	# 	return HttpResponseRedirect(reverse('login'))
+	def post(self, request, *args, **kwargs):
+		response = {}
+		last_name = request.POST.get('last_name')
+		order_id = request.POST.get('order_id')
+		order_intake = request.POST.get('order_intake')
+		found_order = ""
+
+		try:
+			if last_name and order_id:
+				found_order = Order.objects.filter(order_id = order_id, 
+					customer__user__last_name = last_name).last()
+
+			if last_name and order_id and order_intake:
+				found_order = Order.objects.filter(order_id = order_id, 
+					customer__user__last_name = last_name).last()
+
+			if found_order:
+				response['first_name'] = found_order.customer.user.first_name
+				response['order_id'] = order_id
+				response['email'] = found_order.customer.user.email
+				response['msg'] = "Order successfully found."
+				response['status'] = True
+			else:
+				response['msg'] = "Order not found with given information."
+				response['status'] = False
+		except Exception as e:
+			response['msg'] = "Something went wrong."
+			response['status'] = False
+
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
+
+class OrderListing(LoginRequiredMixin, View):
+	template_name = "order-listing.html"
+	login_url = '/'
+
+	def get(self,request):
+		orders = Order.objects.filter(is_deleted = False)
+		return render(request,self.template_name,locals())
+
+class OrderDelete(View):
+
+	def post(self,request):
+		response = {}
+		order_id = request.POST.get('delete_order_id')
+		try:
+			order = Order.objects.get(pk = order_id)
+			order.is_deleted = True
+			order.save()
+			response['msg'] = "Order successfully deleted."
+			response['status'] = True
+		except Exception as e:
+			print(e)
+			response['msg'] = "Something went wrong.Please try again."
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')
+		

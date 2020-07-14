@@ -9,10 +9,12 @@
 		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Product Entry</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Notes</a>
+		    <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Notes</a> -->
+		     <a class="nav-link" id="profile-tab">Notes</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Office Use only</a>
+		    <!-- <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Office Use only</a> -->
+		    <a class="nav-link"  id="contact-tab">Office Use only</a>
 		  </li>
 		</ul>
 	
@@ -57,7 +59,7 @@
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="qty" placeholder="" class="form-control qty">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="qty" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" class="form-control qty">
                                 </div>
                           	</td>
                           	<td>
@@ -224,10 +226,10 @@
 					<div class="text-center mb-4 d-flex mr-2 justify-content-center">
 					  	<button type="button" class="btn btn-success mr-2 grand-total" disabled="true">Calculate Total</button>
 					  	<ul class="nav btm-nav" id="myTab" role="tablist">
-					  	<li class="nav-item">
+					  	<li class="nav-item" style="cursor: pointer;">
 						    <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" >Next</a> -->
 						    <!-- <button class="nav-link save-order btn-success" type="button">Next</button> -->
-						    <button class="btn btn-success nav-link  save-order" type="button" disabled="true">Next</button>
+						    <button class="btn btn-sucss nav-link  save-order" type="button" disabled="true">Next</button>
 						</li>
 						</ul>
 					 </div>
@@ -265,11 +267,11 @@
 			</form>
 			<div class="d-flex justify-content-center">
 	  		<ul class="nav btm-nav" id="myTab" role="tablist">
-			<li class="nav-item mr-2">
+			<li class="nav-item mr-2" style="cursor: pointer;">
 			    <a class="nav-link active notes-per">Previous</a>
 			  </li>
 			 
-			  <li class="nav-item">
+			  <li class="nav-item" style="cursor: pointer;">
 			  	<!-- <a class="nav-link add-cus-notes" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Next</a> -->
 			    <a class="nav-link add-cus-notes">Next</a>
 			    <!-- <button class="add-cus-notes btn btn-success">Next</button> -->
@@ -289,10 +291,10 @@
 		</div>
 		<div class="d-flex justify-content-center mt-3">
   		<ul class="nav btm-nav" id="myTab" role="tablist">
-		<li class="nav-item">
+		<li class="nav-item mr-2" style="cursor: pointer;">
 		    <a class="nav-link terms_per">Previous</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" style="cursor: pointer;">
 		    <!--  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Save</a> -->
 		     <a class="nav-link add-terms">Save</a>
 		</li>
@@ -393,9 +395,10 @@ function CalculateSubtotal(){
 		$('.save-order').attr('disabled',false)
 	})
 
+	var product_data = [];
 	$('.save-order').click(function(){
 		var submit = true;
-		var product_data = [];
+		
 		$('.product_tr').each(function(){
 			var value = {}
 			var all_inputs = $(this).find('input');
@@ -435,107 +438,130 @@ function CalculateSubtotal(){
 		var sale_tax = $('.sale-tax').val();
 	
 		if (submit == true){
-			$.ajax({
-				url: '{% url "order" %}',
-				type: 'POST',
-				data:{
-					'labor_dis':labor_dis,
-					'labor_price':labor_price,
-					'floor_des':floor_des,
-					'floor_price':floor_price,
-					'sub_floor_des':sub_floor_des,
-					'sub_floor_price':sub_floor_price,
-					'appliances':appliances,
-					'appliances_price':appliances_price,
-					'trim':trim,
-					'miscellaneous_des':miscellaneous_des,
-					'miscellaneous_price':miscellaneous_price,
-					'price_include':price_include,
-					'price_include_price':price_include_price,
-					'product_data':(JSON.stringify(product_data)),
-					'csrfmiddlewaretoken':'{{ csrf_token }}',
-					'sub_tot':sub_tot,
-					'total_amount':total_amount,
-					'deposite_amount':deposite_amount,
-					'due_balance':due_balance,
-					'sale_tax':sale_tax
-
-				},
-				success: function(response){
-					if (response.status == true){
-						localStorage.setItem('order_id',response.order_id);
-						$('.add-order').css('display','none');
-						$('.notes-tab').css('display','block');
-					}
-
-				}
-			});
+		
+			$('#home-tab').removeClass('active');
+			$('#profile-tab').addClass('active');
+			$('.add-order').css('display','none');
+			$('.notes-tab').css('display','block');
 		}
 	})
 
 $('.add-cus-notes').click(function(){
 	var customer_notes = $('textarea[name="customer_notes"]').val();
 	var job_site_notes = $('textarea[name="job_site_notes"]').val();
-	var order_id = localStorage.getItem('order_id');
+	var submit = true;
 
-	$.ajax({
-			url: '{% url "add_customer_notes" %}',
-			type: 'POST',
-			data:{
-				'csrfmiddlewaretoken':'{{ csrf_token }}',
-				'customer_notes':customer_notes,
-				'job_site_notes':job_site_notes,
-				'order_id':order_id
-			},
-			success: function(response){
-				console.log(response.status,'===================response.status')
-				if (response.status == true){
-					$('.add-terms-conditions').css('display', 'block');
-					$('.notes-tab').css('display','none');
-					
-					
-				}
-
-			}
-		});
-		
+	if (customer_notes == null || customer_notes == ""){
+		$('textarea[name="customer_notes"]').css('border','1px solid red');
+    	submit = false;
+	}
+	else{
+		$('textarea[name="customer_notes"]').css('border','1px solid #ced4da');
+	}
+	if (job_site_notes == null || job_site_notes == ""){
+		$('textarea[name="job_site_notes"]').css('border','1px solid red');
+    	submit = false;
+	}
+	else{
+		$('textarea[name="job_site_notes"]').css('border','1px solid #ced4da');
+	}
+	if (submit == true){
+		$('#profile-tab').removeClass('active');
+		$('#contact-tab').addClass('active');
+		$('.add-terms-conditions').css('display', 'block');
+		$('.notes-tab').css('display','none');
+	}		
 })
 
 $('.add-terms').click(function(){
 	var terms = $('textarea[name="terms"]').val();
-	var order_id = localStorage.getItem('order_id');
-	$.ajax({
-			url: '{% url "add_terms" %}',
+
+	var labor_dis = $('input[name="labor_dis"]').val();
+	var labor_price = $('input[name="labor_price"]').val();
+	var floor_des = $('input[name="floor_des"]').val();
+	var floor_price = $('input[name="floor_price"]').val();
+	var sub_floor_des = $('input[name="sub_floor_des"]').val();
+	var sub_floor_price = $('input[name="sub_floor_price"]').val();
+	var appliances = $('input[name="appliances"]').val();
+	var appliances_price = $('input[name="appliances_price"]').val();
+	var trim = $('input[name="trim"]').val();
+	var trim_price = $('input[name="trim_price"]').val();
+	var miscellaneous_des = $('input[name="miscellaneous_des"]').val();
+	var miscellaneous_price = $('input[name="miscellaneous_price"]').val();
+	var price_include = $('input[name="price_include"]').val();
+	var price_include_price = $('input[name="price_include_price"]').val();
+	var sub_tot = ($('.sub-totals').html()).replace('$ ','');
+	var total_amount = ($('.total-amount').html()).replace('$ ','');
+	var deposite_amount = ($('.deposite-amount').html()).replace('$ ','');
+	var due_balance = ($('.due-balance').html()).replace('$ ','');
+	var sale_tax = $('.sale-tax').val();
+	var customer_notes = $('textarea[name="customer_notes"]').val();
+	var job_site_notes = $('textarea[name="job_site_notes"]').val();
+	var submit = true;
+
+	if (terms == null || terms == ""){
+		$('textarea[name="terms"]').css('border','1px solid red');
+    	submit = false;
+	}
+	else{
+		$('textarea[name="terms"]').css('border','1px solid #ced4da');
+	}
+	if (submit == true){
+		$.ajax({
+			url: '{% url "order" %}',
 			type: 'POST',
 			data:{
 				'csrfmiddlewaretoken':'{{ csrf_token }}',
 				'terms':terms,
-				'order_id':order_id
+				'labor_dis':labor_dis,
+				'labor_price':labor_price,
+				'floor_des':floor_des,
+				'floor_price':floor_price,
+				'sub_floor_des':sub_floor_des,
+				'sub_floor_price':sub_floor_price,
+				'appliances':appliances,
+				'appliances_price':appliances_price,
+				'trim':trim,
+				'miscellaneous_des':miscellaneous_des,
+				'miscellaneous_price':miscellaneous_price,
+				'price_include':price_include,
+				'price_include_price':price_include_price,
+				'product_data':(JSON.stringify(product_data)),
+				'csrfmiddlewaretoken':'{{ csrf_token }}',
+				'sub_tot':sub_tot,
+				'total_amount':total_amount,
+				'deposite_amount':deposite_amount,
+				'due_balance':due_balance,
+				'sale_tax':sale_tax,
+
+				'customer_notes':customer_notes,
+				'job_site_notes':job_site_notes,
 			},
 			success: function(response){
 				if (response.status == true){
-					// $('.notes-tab').css('display','none');
-					// $('.add-terms-conditions').css('display', 'block');
-					$('.alert-success').append(response.msg);
-					$('.alert-success').show();
-					var terms = $('textarea[name="terms"]').val('');
+					localStorage.setItem('success_msg',response.msg);
+					window.location = "{% url 'customers' %}"
 
 				}
 
 			}
 		});
-		
+	}
 })
 
 
 $('.terms_per').click(function(){
 	$('.add-terms-conditions').css('display', 'none');
 	$('.notes-tab').css('display','block');
+	$('#contact-tab').removeClass('active');
+	$('#profile-tab').addClass('active');
 })
 
 $('.notes-per').click(function(){
 	$('.add-order').css('display', 'block');
 	$('.notes-tab').css('display','none');
+	$('#profile-tab').removeClass('active');
+	$('#home-tab').addClass('active');
 })
 
  </script>
