@@ -48,7 +48,12 @@
 						        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						          <a class="dropdown-item" href="{% url 'customers' %}">Create New Order</a>
 						          <a class="dropdown-item" href="#">Modify Existing Order</a>
-						          <a class="dropdown-item" href="#">Lookup Order</a>
+						          <a class="dropdown-item" href="{% url 'order-search' %}">Lookup Order</a>
+                      <form id="logoutform" method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden">
+                          <a class="dropdown-item" href="javascript: void(0)" id="logout_btn">Logout</a>
+                      </form>
 						          <!-- <div class="dropdown-divider"></div> -->
 						          
 						        </div>
@@ -92,6 +97,9 @@
       $('.overlay').removeClass('active');
   	});
 
+     $('#logout_btn').on('click', function () {
+      $('#logoutform').submit();
+     })
 	 
     </script>
 {% block extrascript %}

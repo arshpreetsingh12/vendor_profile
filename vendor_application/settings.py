@@ -69,6 +69,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'vendor_application.wsgi.application'
+LOGIN_URL= 'login'
 
 
 # Database

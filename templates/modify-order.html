@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+ <!-- Form section start  -->
+	<section class="form-section all-page-mg">
+		<div class="container">
+			<div class="Customer-Information-form-21">
+				<form method="post" siq_id="autopick_9165">
+				    <h5 class=" mb-3">Modify Your Order</h5>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="email" id="last_name" name="last_name" aria-describedby="emailHelp" placeholder="Last Name" class="form-control last_name">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="email" id="order_intake" name="order_intake" aria-describedby="emailHelp" placeholder="Initials or Order Intake" class="form-control order_intake">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="email" id="order_id" name="order_id" aria-describedby="emailHelp" placeholder="Order ID" class="form-control order_id">
+								</div>
+							</div>
+						</div>
+				</form>
+		        <div class="text-center"><button class="btn-success btn" id="user_search_form_btn">Submit</button></div>
+		    </div>
+		</div>
+	</section>
+<!-- /#page-content-wrapper -->
+{% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript">
+	$('#user_search_form_btn').click(function(){
+
+		var last_name = $("#last_name").val();
+		var order_intake = $("#order_intake").val();
+		var order_id =  $("#order_id").val();
+
+	    if (last_name==''|| last_name == null){
+	    	$("#last_name").css('border', '1px solid red');
+	        return false;
+	    }
+	    else{
+	    	$("#last_name").css('border', '1px solid #ced4da');
+	    }
+
+	    if (order_intake==''|| order_intake == null){
+	    	$("#order_intake").css('border', '1px solid red');
+	        return false;
+	    }
+	    else{
+	    	$("#order_intake").css('border', '1px solid #ced4da');
+	    }
+
+	    if (order_id==''|| order_id == null){
+	    	$("#order_id").css('border', '1px solid red');
+	        return false;
+	    }
+	    else{
+	    	$("#order_id").css('border', '1px solid #ced4da');
+	    }
+
+	    // all validation rule applied now going to submit form.
+
+	})
+
+
+</script>
+{% endblock %}

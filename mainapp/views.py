@@ -17,6 +17,9 @@ class LoginView(View):
 	template_name = "login.html"
 
 	def get(self,request):
+
+		if request.user.is_authenticated and request.user.is_active:
+			return HttpResponseRedirect(reverse('customers'))
 		return render(request,self.template_name,locals())
 
 	def post(self, request, *args, **kwargs):
@@ -30,7 +33,7 @@ class LoginView(View):
 					userauth = authenticate(username=user.username, password=password)
 					if userauth:
 						login(request, user,backend='django.contrib.auth.backends.ModelBackend')	
-						return HttpResponseRedirect(reverse('order'))
+						return HttpResponseRedirect(reverse('customers'))
 							
 					else:
 						messages.error(request,'Invalid credentials.')
@@ -43,6 +46,17 @@ class LoginView(View):
 			print(str(e))
 			messages.info(request,'No such account exist.')
 			return HttpResponseRedirect(reverse('web_login'))
+
+""" 
+	This view for user logout  
+								"""
+class Logout(View):
+
+	def post(self, request, *args, **kwargs):
+		print('\n'*5)
+		print('inside logout post')
+		logout(request)
+		return HttpResponseRedirect(reverse('login'))
 
 
 class CustomerView(View):
@@ -188,7 +202,7 @@ class Jobs(View):
 	def post(self, request):
 		response = {}
 		customer_id = request.POST.get('customer_id')
-		first_name = request.POST.get('first_name')
+		first_name = request.POST.get('fisrt_name')
 		last_name = request.POST.get('last_name')
 		phone_number = request.POST.get('phone_number')
 		address = request.POST.get('address')
@@ -439,3 +453,17 @@ class AddTerms(View):
 			raise e
 			response['status'] = False
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
+
+
+class OrderSearch(View):
+
+	template_name = "modify-order.html"
+
+	def get(self,request):
+		return render(request,self.template_name)
+
+	# def post(self, request, *args, **kwargs):
+	# 	print('\n'*5)
+	# 	print('inside logout post')
+	# 	logout(request)
+	# 	return HttpResponseRedirect(reverse('login'))

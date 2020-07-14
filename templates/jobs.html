@@ -68,7 +68,7 @@
 	                               </div>
 	                               <div class="col-md-6">
 	                                  <div class="form-group">
-	                                    <select placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3" name="state">
+	                                    <select placeholder="State" aria-label="Select Account Type" required="required" class="form-control mb-3 state" name="state">
 	                                       <option value="" disabled="disabled" selected="selected" hidden="hidden">State *</option>
 	                                       <option value="AL">Alabama</option>
 											<option value="AK">Alaska</option>
@@ -297,7 +297,7 @@ $('.add-job').click(function(){
 	$('.alert-danger').html('');
 	var fisrt_name = $("input[name='first_name']").val();
 	var phone_number = $("input[name='phone_number']").val();
-	var state = $(".edit_state").val();
+	var state = $(".state").val();
 	var city = $("input[name='city']").val();
 	var post_code = $("input[name='post_code']").val();
 	var submit = true;
@@ -329,11 +329,11 @@ $('.add-job').click(function(){
      }  
       
     if (state == ''|| state == null){
-        $('.edit_state').css('border', '1px solid red');
+        $('.state').css('border', '1px solid red');
           submit = false;
     }
     else{
-    	$('.edit_state').css('border', '1px solid #ced4da');
+    	$('.state').css('border', '1px solid #ced4da');
     	submit = true;
    
      }
