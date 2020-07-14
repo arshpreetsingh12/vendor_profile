@@ -15,6 +15,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
 from django.db import transaction
+
+
 """ 
 	This view for user login  
 								"""
@@ -64,6 +66,10 @@ class Logout(View):
 		return HttpResponseRedirect(reverse('login'))
 
 
+
+""" 
+	This view for add new customer.
+										"""
 class CustomerView(LoginRequiredMixin,View):
 	login_url = '/'
 	template_name = "customer.html"
@@ -119,7 +125,9 @@ class CustomerView(LoginRequiredMixin,View):
 			return HttpResponseRedirect(reverse('customers'))
 	
 
-
+""" 
+	This view for search existing customer.
+											"""
 class SearchCustomer(LoginRequiredMixin,View):
 	login_url = '/'
 
@@ -158,6 +166,10 @@ class SearchCustomer(LoginRequiredMixin,View):
 
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
+
+""" 
+	This view for edit customer.
+								 """
 
 class EditCustomer(LoginRequiredMixin, View):
 	login_url = '/'
@@ -201,6 +213,11 @@ class EditCustomer(LoginRequiredMixin, View):
 			print(e)
 			messages.error(request,"Something went wrong.Please try again.")
 			return HttpResponseRedirect(reverse('customers'))
+
+
+""" 
+	This view for add new job location.
+										"""
 
 class Jobs(LoginRequiredMixin,View):
 	login_url = '/'
@@ -256,6 +273,10 @@ class Jobs(LoginRequiredMixin,View):
 			# messages.success(request,"Job location successfilly added.")
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
+
+""" 
+	This view for search existing job location.
+												"""
 class SearchJobs(LoginRequiredMixin, View):
 	login_url = '/'
 
@@ -295,6 +316,9 @@ class SearchJobs(LoginRequiredMixin, View):
 
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
+""" 
+	This view for edit job location.
+										"""
 class EditJobLocation(LoginRequiredMixin, View):
 	login_url = '/'
 
@@ -324,7 +348,9 @@ class EditJobLocation(LoginRequiredMixin, View):
 			messages.error(request,"Something went wrong.Please try again.")
 			return HttpResponseRedirect('/jobs')
 
-
+""" 
+	This view for add new order.
+									"""
 class OrderView(LoginRequiredMixin,View):
 	template_name = "order.html"
 	login_url = '/'
@@ -456,6 +482,7 @@ class OrderView(LoginRequiredMixin,View):
 
 
 class OrderSearch(LoginRequiredMixin, View):
+	""" This view for search existing order. """
 	template_name = "modify-order.html"
 	login_url = '/'
 
@@ -493,7 +520,10 @@ class OrderSearch(LoginRequiredMixin, View):
 
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
 
+
+
 class OrderListing(LoginRequiredMixin, View):
+	""" This view for all order list. """
 	template_name = "order-listing.html"
 	login_url = '/'
 
@@ -501,8 +531,9 @@ class OrderListing(LoginRequiredMixin, View):
 		orders = Order.objects.filter(is_deleted = False)
 		return render(request,self.template_name,locals())
 
-class OrderDelete(View):
 
+class OrderDelete(View):
+	""" This view for delete existing order. """
 	def post(self,request):
 		response = {}
 		order_id = request.POST.get('delete_order_id')
