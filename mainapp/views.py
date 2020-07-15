@@ -358,7 +358,7 @@ class OrderView(LoginRequiredMixin,View):
 	def get(self,request):
 		return render(request,self.template_name,locals())
 
-	def post(Self, request):
+	def post(self, request):
 		response = {}
 		products = json.loads(request.POST.get('product_data'))
 		labor_dis = request.POST.get('labor_dis')
@@ -499,15 +499,16 @@ class OrderSearch(LoginRequiredMixin, View):
 		try:
 			if last_name and order_id:
 				found_order = Order.objects.filter(order_id = order_id, 
-					customer__user__last_name = last_name).last()
+					customer__user__last_name = last_name, is_deleted = False).last()
 
 			if last_name and order_id and order_intake:
 				found_order = Order.objects.filter(order_id = order_id, 
-					customer__user__last_name = last_name).last()
+					customer__user__last_name = last_name,is_deleted = False).last()
 
 			if found_order:
 				response['first_name'] = found_order.customer.user.first_name
 				response['order_id'] = order_id
+				response['id'] = found_order.id
 				response['email'] = found_order.customer.user.email
 				response['msg'] = "Order successfully found."
 				response['status'] = True
@@ -548,4 +549,134 @@ class OrderDelete(View):
 			response['msg'] = "Something went wrong.Please try again."
 			response['status'] = False
 		return HttpResponse(json.dumps(response), content_type = 'application/json')
-		
+
+
+""" This view for edit existing order. """		
+class EditOrder(View):
+	template_name = "edit-order.html"
+	login_url = '/'
+
+	def get(self,request,order_id):
+		try:
+			order = Order.objects.get(pk = order_id)
+			notes = Notes.objects.get(order = order)
+			terms = Terms.objects.get(order = order)
+		except Exception as e:
+			pass
+		return render(request,self.template_name,locals())
+
+
+	def post(self,request, order_id):
+		response = {}
+		products = json.loads(request.POST.get('product_data'))
+		labor_dis = request.POST.get('labor_dis')
+		labor_price = request.POST.get('labor_price')
+		floor_des = request.POST.get('floor_des')
+		floor_price = request.POST.get('floor_price')
+		sub_floor_des = request.POST.get('sub_floor_des')
+		sub_floor_price = request.POST.get('sub_floor_price')
+		appliances = request.POST.get('appliances')
+		appliances_price = request.POST.get('appliances_price')
+		trim = request.POST.get('trim')
+		trim_price = request.POST.get('trim_price')
+		miscellaneous_des = request.POST.get('miscellaneous_des')
+		miscellaneous_price = request.POST.get('miscellaneous_price')
+		price_include = request.POST.get('price_include')
+		price_include_price = request.POST.get('price_include_price')
+		sub_tot = request.POST.get('sub_tot')
+		total_amount = request.POST.get('total_amount')
+		deposite_amount = request.POST.get('deposite_amount')
+		due_balance = request.POST.get('due_balance')
+		sale_tax = request.POST.get('sale_tax')
+		customer_id = request.session.get('customer_id')
+		terms = request.POST.get('terms')
+		customer_notes = request.POST.get('customer_notes')
+		job_site_notes = request.POST.get('job_site_notes')
+
+		try:
+			with transaction.atomic():
+				add_order = Order.objects.get(pk = order_id)
+				if labor_dis:
+					add_order.labor = labor_dis
+				if labor_price:
+					add_order.labor_price = labor_price
+				if floor_des:
+					add_order.floor_prep = floor_des
+				if floor_price:	
+					add_order.floor_prep_price = floor_price
+				if sub_floor_des:
+					add_order.sub_floor = sub_floor_des
+				if sub_floor_price:
+					add_order.sub_floor_price = sub_floor_price
+				if appliances:
+					add_order.appliances = appliances
+				if appliances_price:
+					add_order.appliances_price = appliances_price
+				if miscellaneous_des:
+					add_order.miscellaneous = miscellaneous_des
+				if miscellaneous_price:
+					add_order.miscellaneous_price = miscellaneous_price
+				if price_include:
+					add_order.price_includes = price_include
+				if price_include_price:
+					add_order.price_includes_price = price_include_price
+				if sub_tot:
+					add_order.sub_total = sub_tot
+				if sale_tax:
+					add_order.sales_tax = sale_tax
+				if total_amount:
+					add_order.total = total_amount
+				if deposite_amount:
+					add_order.deposit = deposite_amount
+				if due_balance:
+					add_order.balance_due = due_balance
+				if trim:
+					add_order.trim = trim
+				if trim_price:
+					add_order.trim_price = trim_price
+				add_order.is_deleted = False
+				add_order.save()
+
+				## delete order product
+				product = Products.objects.filter(order = add_order).delete()
+
+				## add new product 
+				for data in products:
+					add_product = Products.objects.create(
+						order = add_order,
+						product_name = data['product_service'],
+						color = data['color'],
+						qty = data['qty'],
+						area = data['area'],
+						price = data['product_price']
+						
+					)
+
+				Terms.objects.filter(order = add_order).update(terms = terms)
+
+				Notes.objects.filter(order = add_order).update(
+					job_site_notes = job_site_notes,
+					customer_notes = customer_notes			
+				)
+
+				html_string2 = render_to_string('order-invoice-pdf.html',  locals())
+				html = HTML(string=html_string2, base_url=request.build_absolute_uri(),)
+				html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ str(add_order.order_id) + '.pdf');
+				invoice_file = 'invoices/' + str(add_order.order_id) + '_edit' + '.pdf'
+				seller_email = [add_order.customer.user.email]
+				email_from = settings.EMAIL_HOST_USER
+				subject ="Order Invoice"
+				message = ""
+				msgs = EmailMessage(subject ,message  , email_from, seller_email )
+				msgs.content_subtype = "html" 
+				msgs.attach_file(settings.BASE_DIR + '/media/' + invoice_file)
+				msgs.send()
+				add_order.invoice_file = invoice_file
+				add_order.save()
+				response['msg'] = "Order successfully updated"
+				response['status'] = True
+			
+		except Exception as e:
+			raise e
+			response['status'] = False
+		return HttpResponse(json.dumps(response), content_type = 'application/json')

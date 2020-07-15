@@ -46,30 +46,31 @@
 					    </tr>
 					  </thead>
 					  <tbody>
+					  	{% for pro in order.products_set.all %}
 					    <tr class="product_tr">
 					      	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="product_service" placeholder="" class="form-control product_service">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="product_service" placeholder="" class="form-control product_service" value="{{pro.product_name}}">
                                 </div>
                           	</td>
 					      	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="color" placeholder="" class="form-control color">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="color" placeholder="" class="form-control color" value="{{pro.color}}">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="qty" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" class="form-control qty">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="qty" placeholder="" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" class="form-control qty" value="{{pro.qty}}">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="area" placeholder="" class="form-control area">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="area" placeholder="" class="form-control area" value="{{pro.area}}">
                                 </div>
                           	</td>
                           	<td>
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control product_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="product_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control product_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="product_price" value="{{pro.price}}">
                                 </div>
                           	</td>
                           	<td>
@@ -78,7 +79,7 @@
 						      	</div>
                           	</td>
 					    </tr>
-					    
+					    {% endfor %}
 					  
 					  </tbody>
 					  
@@ -93,12 +94,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="labor_dis" placeholder="" class="form-control labor_dis">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" name="labor_dis" placeholder="" class="form-control labor_dis" {% if order.labor %} value="{{order.labor}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control labor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="labor_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control labor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="labor_price" value="{{order.labor_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -107,12 +108,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control floor_des" name="floor_des">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control floor_des" name="floor_des" {% if order.floor_prep %}  value="{{order.floor_prep}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="floor_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="floor_price" value="{{order.floor_prep_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -121,12 +122,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control sub_floor_des" name="sub_floor_des">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control sub_floor_des" name="sub_floor_des"   {% if order.sub_floor %} value="{{order.sub_floor}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control sub_floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="sub_floor_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control sub_floor_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="sub_floor_price" value="{{order.sub_floor_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -135,12 +136,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control appliances" name="appliances">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control appliances" name="appliances" {% if order.appliances %} value="{{order.appliances}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control appliances_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="appliances_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control appliances_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="appliances_price" value="{{order.appliances_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -149,12 +150,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control trim" name="trim">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control trim" name="trim" {% if order.trim %} value="{{order.trim}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control extra_fee trim_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="trim_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control extra_fee trim_price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="trim_price" value="{{order.trim_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -163,12 +164,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control miscellaneous_des" name="miscellaneous_des">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control miscellaneous_des" name="miscellaneous_des" {% if order.miscellaneous %} value="{{order.miscellaneous}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control miscellaneous_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="miscellaneous_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control miscellaneous_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="miscellaneous_price" value="{{order.miscellaneous_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -177,12 +178,12 @@
 						    	<td colspan="4" width="77%">
 							      	<div class="form-group d-flex align-items-center">
 							      	  
-	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control price_include" name="price_include">
+	                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" class="form-control price_include" name="price_include" {% if order.price_includes %} value="{{order.price_includes}}" {% endif %}>
 	                                </div>
 	                          	</td>
 	                          	<td width="20%">
 						      	<div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control price_include_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="price_include_price">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="$0.00" class="form-control price_include_price extra_fee" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" name="price_include_price" value="{{order.price_includes_price}}">
                                 </div>
                           		</td>
 						    </tr>
@@ -199,25 +200,25 @@
 						  <tbody>
 						    <tr>
 						      <th scope="row">Sub-Total</th>
-						      <td class="sub-totals">$0.00</td>
+						      <td class="sub-totals">${{order.sub_total}}</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Sales Tax</th>
 						      <td><div class="form-group">
-                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="In percentage (%)" class="sale-tax form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6">
+                                  <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="In percentage (%)" class="sale-tax form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6" {% if order.sales_tax %} value="{{order.sales_tax}}" {% endif %}>
                                 </div></td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Total</th>
-						      <td class="total-amount">$0.00</td>
+						      <td class="total-amount">${{order.total}}</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">50% Deposit</th>
-						      <td class="deposite-amount">$0.00</td>
+						      <td class="deposite-amount">${{order.deposit}}</td>
 						    </tr>
 						    <tr>
 						      <th scope="row">Balance Due</th>
-						      <td class="due-balance">$0.00</td>
+						      <td class="due-balance">${{order.balance_due}}</td>
 						    </tr>
 						  </tbody>
 						</table>
@@ -257,12 +258,12 @@
 				<!-- </div> -->
 			  <div class="form-group">
 			    <label for="exampleFormControlTextarea1">Customer Notes</label>
-			    <textarea class="form-control" name="customer_notes" required id="exampleFormControlTextarea1" rows="4"></textarea>
+			    <textarea class="form-control" name="customer_notes" required id="exampleFormControlTextarea1" rows="4">{{notes.customer_notes}}</textarea>
 			  </div>
 
 			  <div class="form-group">
 			    <label for="exampleFormControlTextarea1">Job Site Notes</label>
-			    <textarea class="form-control" required name="job_site_notes" id="exampleFormControlTextarea1" rows="5"></textarea>
+			    <textarea class="form-control" required name="job_site_notes" id="exampleFormControlTextarea1" rows="5">{{notes.job_site_notes}}</textarea>
 			  </div>
 			</form>
 			<div class="d-flex justify-content-center">
@@ -287,7 +288,7 @@
   	<div class="Customer-Information-form-2">
 	  	<div class="form-group">
 		    <label for="exampleFormControlTextarea1">Terms & Conditions</label>
-		    <textarea class="form-control" name="terms" id="exampleFormControlTextarea1" rows="5"></textarea>
+		    <textarea class="form-control" name="terms" id="exampleFormControlTextarea1" rows="5">{{terms.terms}}</textarea>
 		</div>
 		<div class="d-flex justify-content-center mt-3">
   		<ul class="nav btm-nav" id="myTab" role="tablist">
@@ -318,6 +319,7 @@
   {% block extrascript %}
 
 <script type="text/javascript">
+	localStorage.removeItem('success_msg');
 	 function copyRow() {
 	    var html = $('#tbl tr:last').html();
 	    $('#tbl tr:last').after("<tr class='product_tr'>" + html + "</tr>");
@@ -371,7 +373,7 @@ function CalculateSubtotal(){
 	function CalculateGrandTotal(){
 		var sub_total_amount = $('.sub-totals').html();
 		var sub_total = parseFloat(sub_total_amount.replace('$ ', ''));
-		var sale_tax = ($('.sale-tax').val()).trim();
+		var sale_tax = $('.sale-tax').val();
 		if (sale_tax == "" || sale_tax == null){
 			console.log('in if ')
 			var total_amount = sub_total.toString()
@@ -508,7 +510,7 @@ $('.add-terms').click(function(){
 	}
 	if (submit == true){
 		$.ajax({
-			url: '{% url "order" %}',
+			url: '{% url "edit-order" order.id %}',
 			type: 'POST',
 			data:{
 				'csrfmiddlewaretoken':'{{ csrf_token }}',
@@ -540,8 +542,10 @@ $('.add-terms').click(function(){
 			},
 			success: function(response){
 				if (response.status == true){
+					// $('.alert-success').append(response.msg);
 					localStorage.setItem('success_msg',response.msg);
-					window.location = "{% url 'customers' %}"
+					// setTimeout(window.location.bind("{% url 'order-list' %}"), 2000);
+					window.location = "{% url 'order-list' %}"
 
 				}
 

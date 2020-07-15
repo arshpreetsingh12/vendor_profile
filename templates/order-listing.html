@@ -6,6 +6,7 @@
  <!-- Form section start  -->
              <section class="form-section all-page-mg">
                 <div class="container">
+                	<div class="alert-success alert" style="text-align: center; display: none;"></div>
                 	<div class="Customer-lsit-table">
 						<table class="table">
 						  <thead>
@@ -24,7 +25,7 @@
 						      <td>{{order.order_id}}</td>
 						      <td>{{order.customer.user.first_name}}</td>
 						      <td>{{order.customer.user.email}}</td>
-						      <td><span class="mr-2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+						      <td><span class="mr-2"><a href="{% url 'edit-order' order.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
 						      	<span class=""><i class="fa fa-trash delete-order" data-id = '{{order.id}}' aria-hidden="true"></i></span></td>
 						    </tr>
 						    {% endfor %}
@@ -40,7 +41,15 @@
 {% block extrascript %}
 <script type="text/javascript">
 
+var msg = localStorage.getItem('success_msg');
+if (msg){
+	$('.alert-success').append(msg);
+	$('.alert-success').show();
+}
+
+
 $('.delete-order').click(function(){
+	localStorage.removeItem('success_msg');
 	var order_id = $(this).attr('data-id');
 	   $.ajax({
 			url: '{% url "order-delete" %}',

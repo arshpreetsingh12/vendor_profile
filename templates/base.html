@@ -47,7 +47,7 @@
 						        </a>
 						        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						          <a class="dropdown-item" href="{% url 'customers' %}">Create New Order</a>
-						          <a class="dropdown-item" href="#">Modify Existing Order</a>
+						          <a class="dropdown-item" href="{% url 'order-list' %}">Modify Existing Order</a>
 						          <a class="dropdown-item" href="{% url 'order-search' %}">Lookup Order</a>
                       <form id="logoutform" method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}

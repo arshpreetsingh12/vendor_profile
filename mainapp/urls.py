@@ -23,6 +23,7 @@ urlpatterns = [
 
 	path('order-search/', (OrderSearch.as_view()), name='order-search'),
 	path('order-list/', (OrderListing.as_view()), name='order-list'),
-	path('order-delete/', (OrderDelete.as_view()), name='order-delete')
+	path('order-delete/', (OrderDelete.as_view()), name='order-delete'),
+	path('edit-order/<int:order_id>', (EditOrder.as_view()), name='edit-order'),
 	
 ]
