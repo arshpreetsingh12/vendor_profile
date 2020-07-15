@@ -661,7 +661,7 @@ class EditOrder(View):
 
 				html_string2 = render_to_string('order-invoice-pdf.html',  locals())
 				html = HTML(string=html_string2, base_url=request.build_absolute_uri(),)
-				html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ str(add_order.order_id) + '.pdf');
+				html.write_pdf(target= settings.BASE_DIR + '/media/invoices/'+ str(add_order.order_id) + '_edit' + '.pdf');
 				invoice_file = 'invoices/' + str(add_order.order_id) + '_edit' + '.pdf'
 				seller_email = [add_order.customer.user.email]
 				email_from = settings.EMAIL_HOST_USER

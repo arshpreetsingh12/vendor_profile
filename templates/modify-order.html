@@ -149,7 +149,8 @@
 });
 
 $('.edit_order').click(function(){
-		$('.alert-success').html('');
+	$('.alert-success').html('');
+	$('.alert-success').css('display','none');
 	var order_id = $(this).attr('data-id');
 
 	window.location.href = '/edit-order/'+ order_id
@@ -159,6 +160,7 @@ $('.edit_order').click(function(){
 
 $('.delete-order').click(function(){
 	$('.alert-success').html('');
+	$('.alert-success').css('display','none');
 	var order_id = $(this).attr('data-id');
 	   $.ajax({
 			url: '{% url "order-delete" %}',
